@@ -1,5 +1,127 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#050b18"><title>Voltiva — Data, Airtime & Boosting</title><link rel="stylesheet" href="styles.css"></head>
+  <section class="payment-proof">
+  <h2>Submit Payment Proof</h2>
+  <p>
+    Already transferred? Enter your payment details
+    below, then send your receipt through WhatsApp.
+  </p>
+
+  <form id="paymentProofForm">
+    <label for="customerName">Full name</label>
+    <input id="customerName" type="text"
+      placeholder="Enter your name" required>
+
+    <label for="customerPhone">Phone number</label>
+    <input id="customerPhone" type="tel"
+      placeholder="Your phone number" required>
+
+    <label for="orderService">What did you order?</label>
+    <select id="orderService" required>
+      <option value="">Choose a service</option>
+      <option>Data</option>
+      <option>Airtime</option>
+      <option>Boosting</option>
+    </select>
+
+    <label for="orderAmount">Amount transferred (₦)</label>
+    <input id="orderAmount" type="number"
+      min="1" step="0.01"
+      placeholder="e.g. 1000" required>
+
+    <label for="transactionRef">
+      Transaction reference
+    </label>
+    <input id="transactionRef" type="text"
+      placeholder="Enter transfer reference" required>
+
+    <button type="submit">Send Payment Proof</button>
+  </form>
+
+  <p class="payment-note">
+    Keep your transfer receipt ready to attach in WhatsApp.
+    Never share your PIN, password or OTP.
+  </p>
+</section>
+
+<style>
+.payment-proof {
+  max-width: 480px;
+  margin: 30px auto;
+  padding: 22px;
+  border-radius: 14px;
+  background: #f4f7fb;
+  color: #172033;
+  font-family: Arial, sans-serif;
+}
+.payment-proof h2 {
+  margin-top: 0;
+}
+.payment-proof label {
+  display: block;
+  margin-top: 14px;
+  font-weight: bold;
+}
+.payment-proof input,
+.payment-proof select {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  margin-top: 6px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 16px;
+  background: white;
+}
+.payment-proof button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px;
+  border: 0;
+  border-radius: 8px;
+  background: #087443;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+.payment-note {
+  font-size: 13px;
+  line-height: 1.5;
+}
+</style>
+
+<script>
+document.getElementById("paymentProofForm")
+  .addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const name =
+      document.getElementById("customerName").value.trim();
+    const phone =
+      document.getElementById("customerPhone").value.trim();
+    const service =
+      document.getElementById("orderService").value;
+    const amount =
+      document.getElementById("orderAmount").value;
+    const reference =
+      document.getElementById("transactionRef").value.trim();
+
+    const message =
+      "Voltiva Payment Proof Submission\n\n" +
+      "Name: " + name + "\n" +
+      "Phone: " + phone + "\n" +
+      "Service: " + service + "\n" +
+      "Amount: N" + amount + "\n" +
+      "Transaction reference: " + reference +
+      "\n\nI will attach my transfer receipt here.";
+
+    const whatsappNumber = "2347014939418";
+    const url = "https://wa.me/" + whatsappNumber +
+      "?text=" + encodeURIComponent(message);
+
+    window.open(url, "_blank");
+  });
+</script>
 <body><section class="payment-section">
   <h2>Pay by Bank Transfer</h2>
   <p>Transfer your order payment to the account below.</p>
