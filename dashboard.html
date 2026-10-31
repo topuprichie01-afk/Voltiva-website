@@ -1,1 +1,167 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Dashboard — Voltiva</title><link rel="stylesheet" href="styles.css"></head><body><header class="topbar"><a class="brand" href="index.html"><span class="brand-symbol">V</span><span><b>VOLTIVA</b><small>DATA · AIRTIME · BOOSTING</small></span></a><nav class="navlinks"><a href="buy-data.html">Buy Data</a><a href="buy-airtime.html">Airtime</a><a href="boosting.html">Boosting</a></nav><a class="nav-cta" href="login.html" onclick="demoLogout(event)">Log out</a></header><main class="container dashboard"><div class="dash-heading"><div><span class="eyebrow">CUSTOMER AREA</span><h1>Your dashboard</h1><p class="muted">Welcome to your Voltiva demo account.</p></div><a class="btn btn-primary" href="buy-data.html">+ New order</a></div><div class="notice-banner"><b>Demo mode</b><span>This dashboard uses sample figures and orders. No real balance, payment or delivery is connected.</span></div><div class="metric-grid"><article class="metric"><span>Demo balance</span><b>₦0.00</b><small>Wallet not connected</small></article><article class="metric"><span>Total orders</span><b>3</b><small>Sample data only</small></article><article class="metric"><span>Completed orders</span><b>2</b><small>Example status</small></article><article class="metric"><span>Pending orders</span><b>1</b><small>Example status</small></article></div><section class="panel"><div class="panel-heading"><div><h2>Recent orders</h2><p class="muted">Example records for layout preview</p></div><a href="buy-data.html">Place an order →</a></div><div class="table-scroll"><table><thead><tr><th>Order ID</th><th>Service</th><th>Recipient</th><th>Amount</th><th>Status</th></tr></thead><tbody><tr><td>#VT-1003</td><td>Data · MTN</td><td>080•••1234</td><td>₦1,000</td><td><span class="status pending">Pending</span></td></tr><tr><td>#VT-1002</td><td>Airtime · Airtel</td><td>080•••6789</td><td>₦500</td><td><span class="status success">Completed</span></td></tr><tr><td>#VT-1001</td><td>Data · Glo</td><td>080•••4321</td><td>₦750</td><td><span class="status success">Completed</span></td></tr></tbody></table></div></section><div class="dash-shortcuts"><a class="shortcut" href="buy-data.html"><b>◉ Buy Data</b><span>Choose a plan →</span></a><a class="shortcut" href="buy-airtime.html"><b>ϟ Buy Airtime</b><span>Top up a number →</span></a><a class="shortcut" href="boosting.html"><b>↗ Boosting</b><span>Request a service →</span></a></div></main><footer class="footer"><div class="container footer-inner"><a class="brand" href="index.html"><span class="brand-symbol">V</span><span><b>VOLTIVA</b><small>DATA · AIRTIME · BOOSTING</small></span></a><small>Demo dashboard · Not connected to live transactions</small></div></footer><script src="app.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voltiva | Customer Dashboard</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6fc;
+      color: #172033;
+    }
+    header {
+      background: #102b62;
+      color: white;
+      padding: 24px 18px;
+    }
+    header h1 { margin: 0 0 8px; }
+    header p { overflow-wrap: anywhere; }
+    main { max-width: 850px; margin: auto; padding: 20px; }
+    .welcome, .section, .service {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 3px 12px #102b6210;
+    }
+    .balance {
+      background: linear-gradient(135deg, #1765e9, #102b62);
+      color: white;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .amount { font-size: 30px; font-weight: bold; margin: 14px 0; }
+    .note { font-size: 13px; }
+    .services {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .service { color: #172033; text-decoration: none; margin: 0; }
+    .service strong { display: block; margin-bottom: 9px; }
+    .service span { color: #667085; font-size: 13px; }
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      padding: 14px;
+      background: #d92d20;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:disabled { opacity: .6; }
+    #message { overflow-wrap: anywhere; }
+    @media (max-width: 380px) {
+      main { padding: 12px; }
+      .services { gap: 10px; }
+      .service { padding: 14px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Voltiva</h1>
+    <p>Your account, all in one place.</p>
+    <p id="customerEmail">Checking your account...</p>
+  </header>
+
+  <main>
+    <p id="message">Checking your login...</p>
+
+    <section class="welcome">
+      <h2>Welcome to Voltiva!</h2>
+      <p>Manage your account and explore our services.</p>
+    </section>
+
+    <section class="balance">
+      <h2>My Wallet</h2>
+      <div class="amount">₦0.00</div>
+      <p class="note">
+        Demo balance only. Wallet funding is not connected yet.
+      </p>
+    </section>
+
+    <h2>Our Services</h2>
+    <div class="services">
+      <a class="service" href="data.html">
+        <strong>📶 Buy Data</strong>
+        <span>Explore data bundles</span>
+      </a>
+      <a class="service" href="airtime.html">
+        <strong>📱 Buy Airtime</strong>
+        <span>Recharge a phone number</span>
+      </a>
+      <a class="service" href="orders.html">
+        <strong>📦 My Orders</strong>
+        <span>View your orders</span>
+      </a>
+      <a class="service" href="index.html">
+        <strong>🏠 Homepage</strong>
+        <span>Return to Voltiva home</span>
+      </a>
+    </div>
+
+    <section class="section" style="margin-top:22px">
+      <h2>My Account</h2>
+      <p id="accountStatus">Loading account details...</p>
+      <button id="logoutButton" type="button">Log Out</button>
+    </section>
+  </main>
+
+  <script type="module">
+    import { createClient } from
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    const SUPABASE_URL =
+      "https://eoadvcorimdpriqzmcux.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_pikDlVHyj8WV-EBv7b2v0Q_YmW0v75i";
+
+    const supabase = createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const message = document.getElementById("message");
+    const customerEmail = document.getElementById("customerEmail");
+    const accountStatus = document.getElementById("accountStatus");
+    const logoutButton = document.getElementById("logoutButton");
+
+    async function checkLogin() {
+      const { data, error } = await supabase.auth.getUser();
+
+      if (error || !data.user) {
+        window.location.replace("login.html");
+        return;
+      }
+
+      customerEmail.textContent = data.user.email || "Customer";
+      accountStatus.textContent = "Your account is signed in.";
+      message.textContent = "Login successful!";
+    }
+
+    logoutButton.addEventListener("click", async () => {
+      logoutButton.disabled = true;
+      message.textContent = "Logging out...";
+
+      const { error } = await supabase.auth.signOut();
+
+      if (error) {
+        message.textContent = "Logout failed. Please try again.";
+        logoutButton.disabled = false;
+        return;
+      }
+
+      window.location.replace("login.html");
+    });
+
+    checkLogin();
+  </script>
+</body>
+</html>
