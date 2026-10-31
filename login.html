@@ -164,13 +164,13 @@
 
     const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_pikDlVHyj8WV-EBv7b2v0Q_YmW0v75i";
 
-    const supabase = createClient(
+    const SUPABASE_URL = "https://eoadvcorimdpriqzmcux.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_pikDlVHyj8WV-EBv7b2v0Q_YmW0v75i";
 
-      SUPABASE_URL,
-
-      SUPABASE_PUBLISHABLE_KEY
-
-    );
+const supabase = createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 
     const form = document.getElementById("login-form");
 
