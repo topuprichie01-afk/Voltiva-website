@@ -1,261 +1,454 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>Login | Voltiva</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voltiva Dashboard</title>
   <style>
-
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
-
       margin: 0;
-
-      min-height: 100vh;
-
-      display: grid;
-
-      place-items: center;
-
-      padding: 20px;
-
-      background: #0b1220;
-
-      color: #f8fafc;
-
       font-family: Arial, sans-serif;
-
+      background: #f3f6fb;
+      color: #182033;
     }
 
-    .card {
-
-      width: 100%;
-
-      max-width: 400px;
-
-      padding: 28px;
-
-      border: 1px solid #263449;
-
-      border-radius: 18px;
-
-      background: #121d30;
-
-    }
-
-    h1 { margin-bottom: 8px; }
-
-    .muted { color: #a8b6ca; line-height: 1.5; }
-
-    label { display: block; margin: 18px 0 7px; }
-
-    input {
-
-      width: 100%;
-
-      padding: 13px;
-
-      border-radius: 8px;
-
-      border: 1px solid #40516a;
-
-      background: #0b1220;
-
+    header {
+      background: #101c3a;
       color: white;
-
-      font-size: 16px;
-
+      padding: 22px 16px;
+      text-align: center;
     }
 
-    button {
+    header h1 {
+      margin: 0 0 8px;
+    }
 
-      width: 100%;
+    header p {
+      margin: 0;
+      color: #d8e2ff;
+    }
 
-      padding: 14px;
+    main {
+      width: min(100% - 28px, 850px);
+      margin: 24px auto;
+    }
 
-      margin-top: 20px;
+    .welcome {
+      margin-bottom: 20px;
+    }
 
-      border: 0;
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
 
-      border-radius: 8px;
-
-      background: #39d98a;
-
-      color: #07140d;
-
-      font-size: 16px;
-
-      font-weight: bold;
-
+    .service-card {
+      background: white;
+      border: 1px solid #e0e6f0;
+      border-radius: 14px;
+      padding: 20px 12px;
+      min-height: 105px;
+      text-align: left;
       cursor: pointer;
-
+      color: #182033;
+      font-size: 16px;
+      font-weight: bold;
+      box-shadow: 0 3px 10px #1423440a;
     }
 
-    button:disabled { opacity: .6; }
+    .service-card span {
+      display: block;
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
 
-    a { color: #67e8b1; }
+    .service-card:hover {
+      border-color: #315ee8;
+    }
 
-    #message { overflow-wrap: anywhere; }
+    .panel {
+      display: none;
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      border: 1px solid #e0e6f0;
+    }
 
+    .panel.active {
+      display: block;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 6px;
+      font-weight: bold;
+    }
+
+    input, select {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd3e1;
+      border-radius: 8px;
+      font-size: 16px;
+      background: white;
+    }
+
+    .primary, .back {
+      border: 0;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 16px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .primary {
+      width: 100%;
+      background: #315ee8;
+      color: white;
+      font-weight: bold;
+    }
+
+    .back {
+      background: #e9edf5;
+      color: #182033;
+    }
+
+    .notice {
+      padding: 12px;
+      border-radius: 8px;
+      background: #fff4d8;
+      color: #624500;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .status {
+      margin-top: 14px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .logout {
+      display: block;
+      margin: 24px auto;
+      padding: 12px 18px;
+      border: 1px solid #d2d9e5;
+      background: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 360px) {
+      .menu {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
-
 </head>
-
 <body>
+  <header>
+    <h1>Voltiva</h1>
+    <p>Your services dashboard</p>
+  </header>
 
-  <main class="card">
+  <main>
+    <section id="home">
+      <div class="welcome">
+        <h2>Welcome!</h2>
+        <p>Choose a service below to get started.</p>
+      </div>
 
-    <h1>Welcome back</h1>
+      <div class="menu">
+        <button class="service-card" data-open="data">
+          <span>📶</span>Buy Data
+        </button>
 
-    <p class="muted">Log in to your Voltiva account.</p>
+        <button class="service-card" data-open="airtime">
+          <span>📱</span>Buy Airtime
+        </button>
 
-    <form id="login-form">
+        <button class="service-card" data-open="boost">
+          <span>🚀</span>Social Boosting
+        </button>
 
-      <label for="email">Email address</label>
+        <button class="service-card" data-open="cable">
+          <span>📺</span>Cable TV Payment
+        </button>
 
-      <input id="email" type="email" autocomplete="email"
+        <button class="service-card" data-open="electricity">
+          <span>💡</span>Electricity Payment
+        </button>
 
-        placeholder="you@example.com" required>
+        <button class="service-card" data-open="profile">
+          <span>👤</span>My Profile
+        </button>
 
-      <label for="password">Password</label>
+        <button class="service-card" data-open="wallet">
+          <span>💳</span>Fund My Account
+        </button>
 
-      <input id="password" type="password"
+        <button class="service-card" data-open="orders">
+          <span>🧾</span>My Orders
+        </button>
+      </div>
+    </section>
 
-        autocomplete="current-password"
+    <section class="panel" id="panel-data">
+      <h2>Buy Data</h2>
+      <p class="notice">Demo only. This form does not purchase data yet.</p>
+      <form data-demo="Data order">
+        <label for="data-network">Network</label>
+        <select id="data-network" required>
+          <option value="">Choose network</option>
+          <option>MTN</option>
+          <option>Airtel</option>
+          <option>Glo</option>
+          <option>9mobile</option>
+        </select>
 
-        placeholder="Your password" required>
+        <label for="data-phone">Phone number</label>
+        <input id="data-phone" type="tel" placeholder="Enter phone number" required>
 
-      <button id="login-button" type="submit">Log In</button>
+        <label for="data-plan">Data plan</label>
+        <select id="data-plan" required>
+          <option value="">Choose a data plan</option>
+          <option>500MB</option>
+          <option>1GB</option>
+          <option>2GB</option>
+          <option>5GB</option>
+          <option>10GB</option>
+        </select>
 
-    </form>
+        <button class="primary" type="submit">Continue</button>
+      </form>
+      <p class="status" aria-live="polite"></p>
+      <button class="back" data-back>← Services</button>
+    </section>
 
-    <p id="message" class="muted" role="status"></p>
+    <section class="panel" id="panel-airtime">
+      <h2>Buy Airtime</h2>
+      <p class="notice">Demo only. No airtime will be sent.</p>
+      <form data-demo="Airtime order">
+        <label for="airtime-network">Network</label>
+        <select id="airtime-network" required>
+          <option value="">Choose network</option>
+          <option>MTN</option>
+          <option>Airtel</option>
+          <option>Glo</option>
+          <option>9mobile</option>
+        </select>
 
-    <p id="dashboard" hidden>
+        <label for="airtime-phone">Phone number</label>
+        <input id="airtime-phone" type="tel" placeholder="Enter phone number" required>
 
-      You are logged in! Your customer account is ready.
+        <label for="airtime-amount">Amount (₦)</label>
+        <input id="airtime-amount" type="number" min="50" placeholder="e.g. 500" required>
 
-    </p>
+        <button class="primary" type="submit">Continue</button>
+      </form>
+      <p class="status" aria-live="polite"></p>
+      <button class="back" data-back>← Services</button>
+    </section>
 
-    <button id="logout-button" type="button" hidden>Log Out</button>
+    <section class="panel" id="panel-boost">
+      <h2>Social Boosting</h2>
+      <p class="notice">Demo only. No social media service will be delivered.</p>
+      <form data-demo="Social boosting request">
+        <label for="boost-platform">Platform</label>
+        <select id="boost-platform" required>
+          <option value="">Choose platform</option>
+          <option>TikTok</option>
+          <option>Instagram</option>
+          <option>Facebook</option>
+          <option>YouTube</option>
+        </select>
 
-    <p>New to Voltiva? <a href="signup.html">Create an account</a></p>
+        <label for="boost-service">Service</label>
+        <select id="boost-service" required>
+          <option value="">Choose service</option>
+          <option>Followers</option>
+          <option>Likes</option>
+          <option>Views</option>
+        </select>
 
-    <p><a href="index.html">Back to homepage</a></p>
+        <label for="boost-link">Public profile or post link</label>
+        <input id="boost-link" type="url" placeholder="https://..." required>
 
+        <label for="boost-quantity">Quantity</label>
+        <input id="boost-quantity" type="number" min="1" placeholder="Enter quantity" required>
+
+        <button class="primary" type="submit">Continue</button>
+      </form>
+      <p class="status" aria-live="polite"></p>
+      <button class="back" data-back>← Services</button>
+    </section>
+
+    <section class="panel" id="panel-cable">
+      <h2>Cable TV Payment</h2>
+      <p class="notice">Demo only. No subscription will be paid.</p>
+      <form data-demo="Cable TV payment request">
+        <label for="cable-provider">Provider</label>
+        <select id="cable-provider" required>
+          <option value="">Choose provider</option>
+          <option>DStv</option>
+          <option>GOtv</option>
+          <option>StarTimes</option>
+        </select>
+
+        <label for="cable-number">Smartcard or account number</label>
+        <input id="cable-number" type="text" placeholder="Enter account number" required>
+
+        <label for="cable-plan">Package</label>
+        <input id="cable-plan" type="text" placeholder="Enter package name" required>
+
+        <button class="primary" type="submit">Continue</button>
+      </form>
+      <p class="status" aria-live="polite"></p>
+      <button class="back" data-back>← Services</button>
+    </section>
+
+    <section class="panel" id="panel-electricity">
+      <h2>Electricity Payment</h2>
+      <p class="notice">Demo only. No electricity token will be generated.</p>
+      <form data-demo="Electricity payment request">
+        <label for="electricity-provider">Distribution company</label>
+        <select id="electricity-provider" required>
+          <option value="">Choose company</option>
+          <option>IKEDC</option>
+          <option>EKEDC</option>
+          <option>IBEDC</option>
+          <option>KEDCO</option>
+          <option>BEDC</option>
+          <option>PHED</option>
+          <option>KAEDCO</option>
+          <option>JED</option>
+          <option>EEDC</option>
+          <option>AEDC</option>
+        </select>
+
+        <label for="electricity-meter">Meter number</label>
+        <input id="electricity-meter" type="text" placeholder="Enter meter number" required>
+
+        <label for="meter-type">Meter type</label>
+        <select id="meter-type" required>
+          <option value="">Choose meter type</option>
+          <option>Prepaid</option>
+          <option>Postpaid</option>
+        </select>
+
+        <label for="electricity-amount">Amount (₦)</label>
+        <input id="electricity-amount" type="number" min="100" placeholder="Enter amount" required>
+
+        <button class="primary" type="submit">Continue</button>
+      </form>
+      <p class="status" aria-live="polite"></p>
+      <button class="back" data-back>← Services</button>
+    </section>
+
+    <section class="panel" id="panel-profile">
+      <h2>My Profile</h2>
+      <p class="notice">Demo only. Changes are not saved to an account yet.</p>
+      <form data-demo="Profile">
+        <label for="profile-name">Full name</label>
+        <input id="profile-name" type="text" placeholder="Enter your name" required>
+
+        <label for="profile-email">Email address</label>
+        <input id="profile-email" type="email" placeholder="Enter your email" required>
+
+        <label for="profile-phone">Phone number</label>
+        <input id="profile-phone" type="tel" placeholder="Enter your phone number">
+
+        <button class="primary" type="submit">Save Profile</button>
+      </form>
+      <p class="status" aria-live="polite"></p>
+      <button class="back" data-back>← Services</button>
+    </section>
+
+    <section class="panel" id="panel-wallet">
+      <h2>Fund My Account</h2>
+      <p class="notice">Demo only. No money will be collected and no wallet balance will be created.</p>
+      <form data-demo="Wallet funding">
+        <label for="wallet-amount">Amount to fund (₦)</label>
+        <input id="wallet-amount" type="number" min="100" placeholder="Enter amount" required>
+        <button class="primary" type="submit">Continue to Payment</button>
+      </form>
+      <p class="status" aria-live="polite"></p>
+      <button class="back" data-back>← Services</button>
+    </section>
+
+    <section class="panel" id="panel-orders">
+      <h2>My Orders</h2>
+      <p>Your saved orders will appear here after order storage is connected.</p>
+      <p class="notice">No orders are stored by this demo dashboard.</p>
+      <button class="back" data-back>← Services</button>
+    </section>
+
+    <button class="logout" id="logout-button" type="button">Log Out</button>
+    <p id="global-status" class="status" aria-live="polite"></p>
   </main>
 
-  <script type="module">
-
-    import { createClient } from
-
-      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
-
-    const SUPABASE_URL =  "https://eoadvcorimdpriqzmcux.supabase.co";
-
-    // Use your PUBLIC Publishable key, never your Secret key.
-
-    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_pikDlVHyj8WV-EBv7b2v0Q_YmW0v75i";
-
-    const SUPABASE_URL = "https://eoadvcorimdpriqzmcux.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_pikDlVHyj8WV-EBv7b2v0Q_YmW0v75i";
-
-const supabase = createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
-
-    const form = document.getElementById("login-form");
-
-    const message = document.getElementById("message");
-
-    const button = document.getElementById("login-button");
-
-    const dashboard = document.getElementById("dashboard");
-
+  <script>
+    const home = document.getElementById("home");
+    const panels = document.querySelectorAll(".panel");
     const logoutButton = document.getElementById("logout-button");
+    const globalStatus = document.getElementById("global-status");
 
-    form.addEventListener("submit", async (event) => {
+    function showPanel(name) {
+      home.style.display = "none";
+      panels.forEach(function(panel) {
+        panel.classList.remove("active");
+      });
 
-      event.preventDefault();
-
-      message.textContent = "";
-
-      button.disabled = true;
-
-      button.textContent = "Logging in...";
-
-      try {
-
-        const { data, error } = await supabase.auth.signInWithPassword({
-
-          email: document.getElementById("email").value.trim(),
-
-          password: document.getElementById("password").value
-
-        });
-
-        if (error) throw error;
-
-        message.textContent = "Login successful!";
-        window.location.href = "dashboard.html";
-        dashboard.hidden = false;
-
-        dashboard.textContent =
-
-          "Logged in as " + data.user.email;
-
-        logoutButton.hidden = false;
-
-        form.hidden = true;
-
-      } catch (error) {
-
-        message.textContent = error.message ||
-
-          "Login failed. Please check your details.";
-
-      } finally {
-
-        button.disabled = false;
-
-        button.textContent = "Log In";
-
+      const selected = document.getElementById("panel-" + name);
+      if (selected) {
+        selected.classList.add("active");
       }
+      logoutButton.style.display = "none";
+      globalStatus.textContent = "";
+      window.scrollTo(0, 0);
+    }
 
+    function showHome() {
+      panels.forEach(function(panel) {
+        panel.classList.remove("active");
+      });
+      home.style.display = "block";
+      logoutButton.style.display = "block";
+      globalStatus.textContent = "";
+      window.scrollTo(0, 0);
+    }
+
+    document.querySelectorAll("[data-open]").forEach(function(button) {
+      button.addEventListener("click", function() {
+        showPanel(button.dataset.open);
+      });
     });
 
-    logoutButton.addEventListener("click", async () => {
-
-      const { error } = await supabase.auth.signOut();
-
-      if (error) {
-
-        message.textContent = error.message;
-
-        return;
-
-      }
-
-      form.hidden = false;
-
-      dashboard.hidden = true;
-
-      logoutButton.hidden = true;
-
-      message.textContent = "You have logged out.";
-
+    document.querySelectorAll("[data-back]").forEach(function(button) {
+      button.addEventListener("click", showHome);
     });
 
+    document.querySelectorAll("form[data-demo]").forEach(function(form) {
+      form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        const status = form.parentElement.querySelector(".status");
+        status.textContent =
+          form.dataset.demo +
+          " form checked. This is only a demo; nothing has been purchased, charged, or saved.";
+      });
+    });
+
+    logoutButton.addEventListener("click", function() {
+      globalStatus.textContent =
+        "Secure logout is not connected yet. We need to connect Supabase authentication.";
+    });
   </script>
-
 </body>
-
 </html>
