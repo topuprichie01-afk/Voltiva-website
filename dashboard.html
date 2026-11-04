@@ -1,454 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Voltiva Dashboard</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voltiva Dashboard</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f3f6fb;
-      color: #182033;
-    }
+<style>
+:root {
+  --black: #08080D;
+  --purple: #7628D8;
+  --silver: #C0C0CC;
+  --card: #17151F;
+  --white: #FFFFFF;
+}
 
-    header {
-      background: #101c3a;
-      color: white;
-      padding: 22px 16px;
-      text-align: center;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    header h1 {
-      margin: 0 0 8px;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--black);
+  color: var(--white);
+}
 
-    header p {
-      margin: 0;
-      color: #d8e2ff;
-    }
+header {
+  padding: 22px 18px;
+  background: #111018;
+  border-bottom: 1px solid #302044;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    main {
-      width: min(100% - 28px, 850px);
-      margin: 24px auto;
-    }
+.logo {
+  font-size: 25px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--silver);
+}
 
-    .welcome {
-      margin-bottom: 20px;
-    }
+.logo span {
+  color: var(--purple);
+}
 
-    .menu {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
+main {
+  padding: 18px;
+  padding-bottom: 105px;
+}
 
-    .service-card {
-      background: white;
-      border: 1px solid #e0e6f0;
-      border-radius: 14px;
-      padding: 20px 12px;
-      min-height: 105px;
-      text-align: left;
-      cursor: pointer;
-      color: #182033;
-      font-size: 16px;
-      font-weight: bold;
-      box-shadow: 0 3px 10px #1423440a;
-    }
+.welcome {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
 
-    .service-card span {
-      display: block;
-      font-size: 26px;
-      margin-bottom: 10px;
-    }
+.wallet {
+  background: linear-gradient(135deg, #7628D8, #21113D);
+  border: 1px solid #A66AFF;
+  padding: 22px;
+  border-radius: 17px;
+  margin-bottom: 25px;
+}
 
-    .service-card:hover {
-      border-color: #315ee8;
-    }
+.wallet small {
+  color: #E3D5F8;
+}
 
-    .panel {
-      display: none;
-      background: white;
-      border-radius: 14px;
-      padding: 20px;
-      border: 1px solid #e0e6f0;
-    }
+.balance {
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 9px;
+}
 
-    .panel.active {
-      display: block;
-    }
+.section-title {
+  font-size: 19px;
+  margin: 25px 0 15px;
+  color: var(--silver);
+}
 
-    label {
-      display: block;
-      margin: 15px 0 6px;
-      font-weight: bold;
-    }
+.services-scroll {
+  max-height: 390px;
+  overflow-y: auto;
+  padding: 2px 5px 15px 2px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--purple) #211D29;
+}
 
-    input, select {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #cbd3e1;
-      border-radius: 8px;
-      font-size: 16px;
-      background: white;
-    }
+.services {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
 
-    .primary, .back {
-      border: 0;
-      border-radius: 8px;
-      padding: 12px 16px;
-      margin-top: 16px;
-      font-size: 15px;
-      cursor: pointer;
-    }
+.service {
+  min-height: 125px;
+  padding: 18px 12px;
+  background: var(--card);
+  border: 1px solid #49316A;
+  border-radius: 15px;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+}
 
-    .primary {
-      width: 100%;
-      background: #315ee8;
-      color: white;
-      font-weight: bold;
-    }
+.service:active {
+  transform: scale(0.97);
+  background: #29183F;
+}
 
-    .back {
-      background: #e9edf5;
-      color: #182033;
-    }
+.service .symbol {
+  font-size: 27px;
+  margin-bottom: 13px;
+}
 
-    .notice {
-      padding: 12px;
-      border-radius: 8px;
-      background: #fff4d8;
-      color: #624500;
-      font-size: 14px;
-      line-height: 1.5;
-    }
+.service strong {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
 
-    .status {
-      margin-top: 14px;
-      line-height: 1.5;
-      overflow-wrap: anywhere;
-    }
+.service small {
+  color: var(--silver);
+  font-size: 12px;
+}
 
-    .logout {
-      display: block;
-      margin: 24px auto;
-      padding: 12px 18px;
-      border: 1px solid #d2d9e5;
-      background: white;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+.scroll-hint {
+  text-align: center;
+  color: var(--silver);
+  font-size: 12px;
+  margin-top: 10px;
+}
 
-    @media (max-width: 360px) {
-      .menu {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+.page {
+  display: none;
+  background: var(--card);
+  border: 1px solid #49316A;
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 20px;
+}
+
+.page.active {
+  display: block;
+}
+
+.page input {
+  width: 100%;
+  padding: 13px;
+  margin: 9px 0;
+  border: 1px solid #55416F;
+  border-radius: 9px;
+  background: #0D0B13;
+  color: white;
+}
+
+.action {
+  width: 100%;
+  padding: 13px;
+  background: var(--purple);
+  border: none;
+  border-radius: 9px;
+  color: white;
+  font-weight: bold;
+  margin-top: 12px;
+  cursor: pointer;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #111018;
+  border-top: 1px solid #49316A;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 10px 3px;
+  padding-bottom: max(10px, env(safe-area-inset-bottom));
+  z-index: 10;
+}
+
+.nav-item {
+  border: none;
+  background: transparent;
+  color: var(--silver);
+  font-size: 11px;
+  padding: 7px 2px;
+  cursor: pointer;
+}
+
+.nav-item span {
+  display: block;
+  font-size: 21px;
+  margin-bottom: 5px;
+}
+
+.nav-item.active {
+  color: #B987FF;
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <h1>Voltiva</h1>
-    <p>Your services dashboard</p>
-  </header>
 
-  <main>
-    <section id="home">
-      <div class="welcome">
-        <h2>Welcome!</h2>
-        <p>Choose a service below to get started.</p>
-      </div>
+<header>
+  <div class="logo">VOLT<span>IVA</span></div>
+  <button onclick="goHome()" style="color:#C0C0CC;background:none;border:1px solid #49316A;border-radius:8px;padding:8px 12px;">Home</button>
+</header>
 
-      <div class="menu">
-        <button class="service-card" data-open="data">
-          <span>📶</span>Buy Data
-        </button>
+<main>
 
-        <button class="service-card" data-open="airtime">
-          <span>📱</span>Buy Airtime
-        </button>
+<div id="homePage">
+  <div class="welcome">Welcome to Voltiva 👋</div>
 
-        <button class="service-card" data-open="boost">
-          <span>🚀</span>Social Boosting
-        </button>
+  <div class="wallet">
+    <small>Wallet Balance</small>
+    <div class="balance">₦0.00</div>
+    <small>Your account balance</small>
+  </div>
 
-        <button class="service-card" data-open="cable">
-          <span>📺</span>Cable TV Payment
-        </button>
+  <div class="section-title">Our Services</div>
 
-        <button class="service-card" data-open="electricity">
-          <span>💡</span>Electricity Payment
-        </button>
+  <div class="services-scroll">
+    <div class="services">
 
-        <button class="service-card" data-open="profile">
-          <span>👤</span>My Profile
-        </button>
+      <button class="service" onclick="openService('Buy Data')">
+        <div class="symbol">📶</div>
+        <strong>Buy Data</strong>
+        <small>Internet data plans</small>
+      </button>
 
-        <button class="service-card" data-open="wallet">
-          <span>💳</span>Fund My Account
-        </button>
+      <button class="service" onclick="openService('Buy Airtime')">
+        <div class="symbol">📱</div>
+        <strong>Buy Airtime</strong>
+        <small>Recharge your line</small>
+      </button>
 
-        <button class="service-card" data-open="orders">
-          <span>🧾</span>My Orders
-        </button>
-      </div>
-    </section>
+      <button class="service" onclick="openService('Social Boosting')">
+        <div class="symbol">🚀</div>
+        <strong>Social Boosting</strong>
+        <small>Social media promotion</small>
+      </button>
 
-    <section class="panel" id="panel-data">
-      <h2>Buy Data</h2>
-      <p class="notice">Demo only. This form does not purchase data yet.</p>
-      <form data-demo="Data order">
-        <label for="data-network">Network</label>
-        <select id="data-network" required>
-          <option value="">Choose network</option>
-          <option>MTN</option>
-          <option>Airtel</option>
-          <option>Glo</option>
-          <option>9mobile</option>
-        </select>
+      <button class="service" onclick="openService('Cable TV')">
+        <div class="symbol">📺</div>
+        <strong>Cable TV</strong>
+        <small>Pay TV subscriptions</small>
+      </button>
 
-        <label for="data-phone">Phone number</label>
-        <input id="data-phone" type="tel" placeholder="Enter phone number" required>
+      <button class="service" onclick="openService('Electricity')">
+        <div class="symbol">💡</div>
+        <strong>Electricity</strong>
+        <small>Pay electricity bills</small>
+      </button>
 
-        <label for="data-plan">Data plan</label>
-        <select id="data-plan" required>
-          <option value="">Choose a data plan</option>
-          <option>500MB</option>
-          <option>1GB</option>
-          <option>2GB</option>
-          <option>5GB</option>
-          <option>10GB</option>
-        </select>
+      <button class="service" onclick="openService('Gaming Top-up')">
+        <div class="symbol">🎮</div>
+        <strong>Gaming Top-up</strong>
+        <small>Game credits and top-ups</small>
+      </button>
 
-        <button class="primary" type="submit">Continue</button>
-      </form>
-      <p class="status" aria-live="polite"></p>
-      <button class="back" data-back>← Services</button>
-    </section>
+    </div>
+  </div>
 
-    <section class="panel" id="panel-airtime">
-      <h2>Buy Airtime</h2>
-      <p class="notice">Demo only. No airtime will be sent.</p>
-      <form data-demo="Airtime order">
-        <label for="airtime-network">Network</label>
-        <select id="airtime-network" required>
-          <option value="">Choose network</option>
-          <option>MTN</option>
-          <option>Airtel</option>
-          <option>Glo</option>
-          <option>9mobile</option>
-        </select>
+  <div class="scroll-hint">↓ Scroll to explore all services ↓</div>
+</div>
 
-        <label for="airtime-phone">Phone number</label>
-        <input id="airtime-phone" type="tel" placeholder="Enter phone number" required>
+<div id="servicePage" class="page">
+  <h2 id="serviceTitle"></h2>
+  <p id="serviceDescription">This service page is ready for its order form and provider connection.</p>
+  <button class="action" onclick="goHome()">Back to Services</button>
+</div>
 
-        <label for="airtime-amount">Amount (₦)</label>
-        <input id="airtime-amount" type="number" min="50" placeholder="e.g. 500" required>
+<div id="fundPage" class="page">
+  <h2>Fund Account</h2>
+  <p>Wallet funding and payment verification will appear here.</p>
+  <p>Payment gateway integration is still required.</p>
+</div>
 
-        <button class="primary" type="submit">Continue</button>
-      </form>
-      <p class="status" aria-live="polite"></p>
-      <button class="back" data-back>← Services</button>
-    </section>
+<div id="transactionsPage" class="page">
+  <h2>Transaction History</h2>
+  <p>Your completed wallet and service transactions will appear here.</p>
+</div>
 
-    <section class="panel" id="panel-boost">
-      <h2>Social Boosting</h2>
-      <p class="notice">Demo only. No social media service will be delivered.</p>
-      <form data-demo="Social boosting request">
-        <label for="boost-platform">Platform</label>
-        <select id="boost-platform" required>
-          <option value="">Choose platform</option>
-          <option>TikTok</option>
-          <option>Instagram</option>
-          <option>Facebook</option>
-          <option>YouTube</option>
-        </select>
+<div id="ordersPage" class="page">
+  <h2>My Orders</h2>
+  <p>Your service orders and their statuses will appear here.</p>
+</div>
 
-        <label for="boost-service">Service</label>
-        <select id="boost-service" required>
-          <option value="">Choose service</option>
-          <option>Followers</option>
-          <option>Likes</option>
-          <option>Views</option>
-        </select>
+<div id="profilePage" class="page">
+  <h2>My Profile</h2>
+  <input type="text" id="customerName" placeholder="Full name">
+  <input type="email" id="customerEmail" placeholder="Email address">
+  <input type="tel" id="customerPhone" placeholder="Phone number">
+  <button class="action" onclick="saveProfile()">Save Details</button>
+  <p id="profileMessage"></p>
+</div>
 
-        <label for="boost-link">Public profile or post link</label>
-        <input id="boost-link" type="url" placeholder="https://..." required>
+</main>
 
-        <label for="boost-quantity">Quantity</label>
-        <input id="boost-quantity" type="number" min="1" placeholder="Enter quantity" required>
+<nav class="bottom-nav">
 
-        <button class="primary" type="submit">Continue</button>
-      </form>
-      <p class="status" aria-live="polite"></p>
-      <button class="back" data-back>← Services</button>
-    </section>
+  <button class="nav-item" onclick="showPage('fundPage', this)">
+    <span>💳</span>Fund Account
+  </button>
 
-    <section class="panel" id="panel-cable">
-      <h2>Cable TV Payment</h2>
-      <p class="notice">Demo only. No subscription will be paid.</p>
-      <form data-demo="Cable TV payment request">
-        <label for="cable-provider">Provider</label>
-        <select id="cable-provider" required>
-          <option value="">Choose provider</option>
-          <option>DStv</option>
-          <option>GOtv</option>
-          <option>StarTimes</option>
-        </select>
+  <button class="nav-item" onclick="showPage('transactionsPage', this)">
+    <span>📜</span>Transactions
+  </button>
 
-        <label for="cable-number">Smartcard or account number</label>
-        <input id="cable-number" type="text" placeholder="Enter account number" required>
+  <button class="nav-item" onclick="showPage('ordersPage', this)">
+    <span>📦</span>Orders
+  </button>
 
-        <label for="cable-plan">Package</label>
-        <input id="cable-plan" type="text" placeholder="Enter package name" required>
+  <button class="nav-item" onclick="showPage('profilePage', this)">
+    <span>👤</span>Profile
+  </button>
 
-        <button class="primary" type="submit">Continue</button>
-      </form>
-      <p class="status" aria-live="polite"></p>
-      <button class="back" data-back>← Services</button>
-    </section>
+</nav>
 
-    <section class="panel" id="panel-electricity">
-      <h2>Electricity Payment</h2>
-      <p class="notice">Demo only. No electricity token will be generated.</p>
-      <form data-demo="Electricity payment request">
-        <label for="electricity-provider">Distribution company</label>
-        <select id="electricity-provider" required>
-          <option value="">Choose company</option>
-          <option>IKEDC</option>
-          <option>EKEDC</option>
-          <option>IBEDC</option>
-          <option>KEDCO</option>
-          <option>BEDC</option>
-          <option>PHED</option>
-          <option>KAEDCO</option>
-          <option>JED</option>
-          <option>EEDC</option>
-          <option>AEDC</option>
-        </select>
+<script>
+function hidePages() {
+  document.querySelectorAll('.page').forEach(page => {
+    page.classList.remove('active');
+  });
 
-        <label for="electricity-meter">Meter number</label>
-        <input id="electricity-meter" type="text" placeholder="Enter meter number" required>
+  document.getElementById('homePage').style.display = 'none';
+}
 
-        <label for="meter-type">Meter type</label>
-        <select id="meter-type" required>
-          <option value="">Choose meter type</option>
-          <option>Prepaid</option>
-          <option>Postpaid</option>
-        </select>
+function showPage(pageId, button) {
+  hidePages();
 
-        <label for="electricity-amount">Amount (₦)</label>
-        <input id="electricity-amount" type="number" min="100" placeholder="Enter amount" required>
+  document.getElementById(pageId).classList.add('active');
 
-        <button class="primary" type="submit">Continue</button>
-      </form>
-      <p class="status" aria-live="polite"></p>
-      <button class="back" data-back>← Services</button>
-    </section>
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.classList.remove('active');
+  });
 
-    <section class="panel" id="panel-profile">
-      <h2>My Profile</h2>
-      <p class="notice">Demo only. Changes are not saved to an account yet.</p>
-      <form data-demo="Profile">
-        <label for="profile-name">Full name</label>
-        <input id="profile-name" type="text" placeholder="Enter your name" required>
+  button.classList.add('active');
+}
 
-        <label for="profile-email">Email address</label>
-        <input id="profile-email" type="email" placeholder="Enter your email" required>
+function goHome() {
+  document.querySelectorAll('.page').forEach(page => {
+    page.classList.remove('active');
+  });
 
-        <label for="profile-phone">Phone number</label>
-        <input id="profile-phone" type="tel" placeholder="Enter your phone number">
+  document.getElementById('homePage').style.display = 'block';
 
-        <button class="primary" type="submit">Save Profile</button>
-      </form>
-      <p class="status" aria-live="polite"></p>
-      <button class="back" data-back>← Services</button>
-    </section>
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.classList.remove('active');
+  });
+}
 
-    <section class="panel" id="panel-wallet">
-      <h2>Fund My Account</h2>
-      <p class="notice">Demo only. No money will be collected and no wallet balance will be created.</p>
-      <form data-demo="Wallet funding">
-        <label for="wallet-amount">Amount to fund (₦)</label>
-        <input id="wallet-amount" type="number" min="100" placeholder="Enter amount" required>
-        <button class="primary" type="submit">Continue to Payment</button>
-      </form>
-      <p class="status" aria-live="polite"></p>
-      <button class="back" data-back>← Services</button>
-    </section>
+function openService(name) {
+  hidePages();
 
-    <section class="panel" id="panel-orders">
-      <h2>My Orders</h2>
-      <p>Your saved orders will appear here after order storage is connected.</p>
-      <p class="notice">No orders are stored by this demo dashboard.</p>
-      <button class="back" data-back>← Services</button>
-    </section>
+  document.getElementById('serviceTitle').textContent = name;
 
-    <button class="logout" id="logout-button" type="button">Log Out</button>
-    <p id="global-status" class="status" aria-live="polite"></p>
-  </main>
+  const descriptions = {
+    'Gaming Top-up': 'Gaming credits and top-ups will be available here once a gaming provider is connected.'
+  };
 
-  <script>
-    const home = document.getElementById("home");
-    const panels = document.querySelectorAll(".panel");
-    const logoutButton = document.getElementById("logout-button");
-    const globalStatus = document.getElementById("global-status");
+  document.getElementById('serviceDescription').textContent =
+    descriptions[name] || 'This service needs its order form and provider connection.';
 
-    function showPanel(name) {
-      home.style.display = "none";
-      panels.forEach(function(panel) {
-        panel.classList.remove("active");
-      });
+  document.getElementById('servicePage').classList.add('active');
+}
 
-      const selected = document.getElementById("panel-" + name);
-      if (selected) {
-        selected.classList.add("active");
-      }
-      logoutButton.style.display = "none";
-      globalStatus.textContent = "";
-      window.scrollTo(0, 0);
-    }
+function saveProfile() {
+  document.getElementById('profileMessage').textContent =
+    'Profile saving still needs database integration.';
+}
+</script>
 
-    function showHome() {
-      panels.forEach(function(panel) {
-        panel.classList.remove("active");
-      });
-      home.style.display = "block";
-      logoutButton.style.display = "block";
-      globalStatus.textContent = "";
-      window.scrollTo(0, 0);
-    }
-
-    document.querySelectorAll("[data-open]").forEach(function(button) {
-      button.addEventListener("click", function() {
-        showPanel(button.dataset.open);
-      });
-    });
-
-    document.querySelectorAll("[data-back]").forEach(function(button) {
-      button.addEventListener("click", showHome);
-    });
-
-    document.querySelectorAll("form[data-demo]").forEach(function(form) {
-      form.addEventListener("submit", function(event) {
-        event.preventDefault();
-        const status = form.parentElement.querySelector(".status");
-        status.textContent =
-          form.dataset.demo +
-          " form checked. This is only a demo; nothing has been purchased, charged, or saved.";
-      });
-    });
-
-    logoutButton.addEventListener("click", function() {
-      globalStatus.textContent =
-        "Secure logout is not connected yet. We need to connect Supabase authentication.";
-    });
-  </script>
 </body>
 </html>
