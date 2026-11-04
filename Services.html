@@ -1,312 +1,134 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Voltiva | Our Services</title>
-
+  <title>Voltiva | Services</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; }
     body {
+      margin: 0;
+      padding: 20px;
       font-family: Arial, sans-serif;
-      background: #f4f8ff;
-      color: #10213b;
+      background: #f3f7ff;
+      color: #14213d;
     }
-
-    header {
-      background: #ffffff;
-      padding: 18px 6%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #e1eaf7;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #0878f9;
-    }
-
-    header a {
-      text-decoration: none;
-      color: #0878f9;
-      font-weight: bold;
-    }
-
-    .hero {
-      background: linear-gradient(135deg, #0878f9, #003d99);
-      color: white;
-      text-align: center;
-      padding: 55px 20px;
-    }
-
-    .hero h1 {
-      font-size: 32px;
-      margin-bottom: 12px;
-    }
-
-    .hero p {
-      max-width: 450px;
-      margin: auto;
-      line-height: 1.6;
-    }
-
-    .container {
-      max-width: 950px;
-      margin: 35px auto;
-      padding: 0 18px;
-    }
-
-    .services {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-      margin-bottom: 35px;
-    }
-
-    .service-card {
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      border: 1px solid #e0e9f5;
-      box-shadow: 0 5px 18px #10213b0a;
-    }
-
-    .service-icon {
-      font-size: 30px;
-      margin-bottom: 15px;
-    }
-
-    .service-card h2 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-
-    .service-card p {
-      color: #61718a;
-      line-height: 1.6;
-      font-size: 14px;
-    }
-
-    .order-box {
-      background: white;
-      padding: 28px;
-      border-radius: 15px;
-      border: 1px solid #e0e9f5;
-      max-width: 600px;
+    main {
+      max-width: 620px;
       margin: 0 auto;
+      padding: 24px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 28px #173b7518;
     }
-
-    .order-box h2 {
-      margin-bottom: 8px;
-    }
-
-    .order-box > p {
-      color: #61718a;
-      margin-bottom: 22px;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    label {
-      display: block;
-      font-weight: bold;
-      margin: 16px 0 8px;
-      font-size: 14px;
-    }
-
-    input, select {
+    h1 { color: #1458c7; margin-top: 0; }
+    label { display: block; margin: 14px 0 6px; font-weight: 700; }
+    input, select, button {
       width: 100%;
-      padding: 14px;
-      border: 1px solid #d5e0ef;
+      padding: 12px;
+      border: 1px solid #cbd6e8;
       border-radius: 9px;
-      background: #ffffff;
       font-size: 16px;
-      color: #10213b;
     }
-
-    input:focus, select:focus {
-      outline: 2px solid #0878f9;
-      border-color: transparent;
-    }
-
     button {
-      width: 100%;
-      margin-top: 22px;
-      padding: 15px;
-      background: #0878f9;
+      margin-top: 20px;
+      border: 0;
+      background: #1458c7;
       color: white;
-      border: none;
-      border-radius: 9px;
-      font-size: 16px;
-      font-weight: bold;
+      font-weight: 700;
       cursor: pointer;
     }
-
-    button:hover {
-      background: #005dce;
-    }
-
-    #message {
-      display: none;
-      margin-top: 18px;
-      padding: 14px;
-      border-radius: 9px;
-      background: #fff4d6;
-      color: #745000;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #61718a;
-      font-size: 13px;
-    }
-
-    @media (max-width: 480px) {
-      .hero h1 {
-        font-size: 26px;
-      }
-
-      .order-box {
-        padding: 22px 18px;
-      }
-    }
+    .note { color: #5b6780; font-size: 14px; line-height: 1.5; }
+    #message { margin-top: 16px; font-weight: 700; }
   </style>
 </head>
-
 <body>
+  <main>
+    <h1>Voltiva Services</h1>
+    <p class="note">Choose one of the four available services.</p>
 
-  <header>
-    <div class="logo">VOLTIVA</div>
-    <a href="index.html">Home</a>
-  </header>
+    <form id="orderForm">
+      <label for="service">Service</label>
+      <select id="service" name="service" required>
+        <option value="">Select a service</option>
+        <option value="airtime">Airtime</option>
+        <option value="data">Data Bundle</option>
+        <option value="cable">Cable TV</option>
+        <option value="electricity">Electricity</option>
+      </select>
 
-  <section class="hero">
-    <h1>Our Services</h1>
-    <p>
-      Stay connected with Voltiva.
-      Buy data, recharge airtime and explore
-      our boosting services.
-    </p>
-  </section>
-
-  <main class="container">
-
-    <section class="services">
-
-      <div class="service-card">
-        <div class="service-icon">📶</div>
-        <h2>Buy Data</h2>
-        <p>
-          Purchase mobile data bundles
-          for your preferred network.
-        </p>
+      <div id="providerField">
+        <label for="provider">Network / Provider</label>
+        <input id="provider" name="provider" placeholder="e.g. MTN, Airtel, GOTV">
       </div>
 
-      <div class="service-card">
-        <div class="service-icon">📱</div>
-        <h2>Buy Airtime</h2>
-        <p>
-          Recharge your mobile phone
-          with airtime.
-        </p>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon">🚀</div>
-        <h2>Boosting</h2>
-        <p>
-          Explore available boosting
-          services and submit your order.
-        </p>
-      </div>
-
-    </section>
-
-    <section class="order-box">
-      <h2>Place an Order</h2>
-      <p>
-        Select a service and enter your
-        details to prepare your order.
-      </p>
-
-      <form id="orderForm">
-
-        <label for="service">Choose a service</label>
-        <select id="service" required>
-          <option value="">Select a service</option>
-          <option value="data">Buy Data</option>
-          <option value="airtime">Buy Airtime</option>
-          <option value="boosting">Boosting</option>
-        </select>
-
-        <label for="network">Network</label>
-        <select id="network" required>
-          <option value="">Choose network</option>
-          <option value="MTN">MTN</option>
-          <option value="Airtel">Airtel</option>
-          <option value="Glo">Glo</option>
-          <option value="9mobile">9mobile</option>
-        </select>
-
+      <div id="phoneField">
         <label for="phone">Phone number</label>
-        <input
-          type="tel"
-          id="phone"
-          placeholder="Enter phone number"
-          required
-        >
+        <input id="phone" name="phone" type="tel" inputmode="numeric" placeholder="Phone number">
+      </div>
 
-        <label for="amount">Amount (₦)</label>
-        <input
-          type="number"
-          id="amount"
-          min="1"
-          placeholder="Enter amount"
-          required
-        >
+      <div id="accountField" hidden>
+        <label for="account">Smart-card / Meter number</label>
+        <input id="account" name="account" inputmode="numeric" placeholder="Enter account number">
+      </div>
 
-        <button type="submit">
-          Continue
-        </button>
+      <div id="meterTypeField" hidden>
+        <label for="meterType">Meter type</label>
+        <select id="meterType" name="meterType">
+          <option value="">Select meter type</option>
+          <option value="prepaid">Prepaid</option>
+          <option value="postpaid">Postpaid</option>
+        </select>
+      </div>
 
-        <div id="message" role="status"></div>
+      <label for="amount">Amount (₦)</label>
+      <input id="amount" name="amount" type="number" min="1" step="1" required>
 
-      </form>
-    </section>
-
+      <button type="submit">Continue</button>
+      <p id="message" role="status"></p>
+      <p class="note">Payment processing is not connected yet. No payment will be taken from this page.</p>
+    </form>
   </main>
 
-  <footer>
-    © 2026 Voltiva. All rights reserved.
-  </footer>
-
   <script>
-    const form = document.getElementById("orderForm");
+    const service = document.getElementById("service");
+    const providerField = document.getElementById("providerField");
+    const phoneField = document.getElementById("phoneField");
+    const accountField = document.getElementById("accountField");
+    const meterTypeField = document.getElementById("meterTypeField");
+    const provider = document.getElementById("provider");
+    const phone = document.getElementById("phone");
+    const account = document.getElementById("account");
+    const meterType = document.getElementById("meterType");
     const message = document.getElementById("message");
 
-    form.addEventListener("submit", function(event) {
+    function updateFields() {
+      const selected = service.value;
+      const isCable = selected === "cable";
+      const isElectricity = selected === "electricity";
+      const isUtility = isCable || isElectricity;
+
+      providerField.hidden = isElectricity;
+      phoneField.hidden = isUtility;
+      accountField.hidden = !isUtility;
+      meterTypeField.hidden = !isElectricity;
+
+      provider.required = !isElectricity && selected !== "";
+      phone.required = !isUtility && selected !== "";
+      account.required = isUtility;
+      meterType.required = isElectricity;
+      account.placeholder = isCable ? "Smart-card number" : "Meter number";
+    }
+
+    service.addEventListener("change", updateFields);
+
+    document.getElementById("orderForm").addEventListener("submit", function (event) {
       event.preventDefault();
-
-      message.style.display = "block";
       message.textContent =
-        "Your order form is ready, but payment processing " +
-        "is not connected yet. Please check back later.";
-
-      // Real orders must be sent to your backend
-      // after the Paybeta integration is completed.
+        "The form is ready, but Paybeta checkout still needs to be connected through the secure Vercel backend.";
     });
-  </script>
 
+    updateFields();
+  </script>
 </body>
 </html>
