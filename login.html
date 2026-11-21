@@ -1,52 +1,195 @@
 
-<script type="module">
-  import { createClient } from
-    "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voltiva | Login</title>
 
-  const SUPABASE_URL =
-    "https://eoadvcorimdpriqzmcux.supabase.co";
-
-  const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_pikDlVHyj8WV-EBv7b2v0Q_YmW0v75i";
-
-  const supabase = createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
-
-  const form = document.getElementById("login-form");
-  const message = document.getElementById("message");
-  const button = document.getElementById("login-button");
-
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    message.textContent = "";
-    button.disabled = true;
-    button.textContent = "Logging in...";
-
-    try {
-      const { data, error } =
-        await supabase.auth.signInWithPassword({
-          email: document.getElementById("email").value.trim(),
-          password: document.getElementById("password").value
-        });
-
-      if (error) throw error;
-
-      if (!data.session) {
-        throw new Error("Login session was not created.");
-      }
-
-      message.textContent = "Login successful!";
-      window.location.href = "dashboard.html";
-
-    } catch (error) {
-      message.textContent =
-        error.message || "Login failed. Please try again.";
-
-      button.disabled = false;
-      button.textContent = "Log In";
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-  });
-</script>
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f7ff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-box {
+      background: white;
+      width: 100%;
+      max-width: 400px;
+      padding: 30px 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      color: #0866d9;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #0866d9;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #message {
+      margin-top: 15px;
+      text-align: center;
+      color: #d62828;
+      overflow-wrap: anywhere;
+    }
+
+    .signup {
+      text-align: center;
+      margin-top: 20px;
+      color: #555;
+    }
+
+    .signup a {
+      color: #0866d9;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-box">
+    <h1>Voltiva</h1>
+    <p class="subtitle">Login to your account</p>
+
+    <form id="login-form">
+
+      <label for="email">Email Address</label>
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+        required
+      >
+
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        placeholder="Enter your password"
+        required
+      >
+
+      <button type="submit" id="login-button">
+        Log In
+      </button>
+
+      <p id="message" role="status" aria-live="polite"></p>
+
+    </form>
+
+    <p class="signup">
+      Don't have an account?
+      <a href="signup.html">Create Account</a>
+    </p>
+  </div>
+
+  <script type="module">
+    import { createClient } from
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    const SUPABASE_URL =
+      "https://eoadvcorimdpriqzmcux.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_pikDlVHyj8WV-EBv7b2v0Q_YmW0v75i";
+
+    const supabase = createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const form = document.getElementById("login-form");
+    const message = document.getElementById("message");
+    const button = document.getElementById("login-button");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      message.textContent = "";
+      button.disabled = true;
+      button.textContent = "Logging in...";
+
+      try {
+        const { data, error } =
+          await supabase.auth.signInWithPassword({
+            email: document.getElementById("email").value.trim(),
+            password: document.getElementById("password").value
+          });
+
+        if (error) throw error;
+
+        if (!data.session) {
+          throw new Error("Login session was not created.");
+        }
+
+        message.style.color = "green";
+        message.textContent = "Login successful!";
+
+        window.location.href = "dashboard.html";
+
+      } catch (error) {
+        message.style.color = "#d62828";
+        message.textContent =
+          error.message || "Login failed. Please try again.";
+
+        button.disabled = false;
+        button.textContent = "Log In";
+      }
+    });
+  </script>
+
+</body>
+</html>
