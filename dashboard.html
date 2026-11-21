@@ -2,554 +2,768 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Voltiva | Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voltiva | Dashboard</title>
 
-<style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-:root {
-  --purple: #9333ea;
-  --violet: #a855f7;
-  --dark: #090711;
-  --panel: #151020;
-  --border: #30213f;
-  --muted: #a69bb5;
-  --white: #ffffff;
-}
+    :root {
+      --bg: #090711;
+      --panel: #151020;
+      --panel2: #1d152b;
+      --purple: #9333ea;
+      --violet: #a855f7;
+      --white: #ffffff;
+      --muted: #a69bb5;
+      --border: #30213f;
+    }
 
-body {
-  font-family: Arial, sans-serif;
-  background: var(--dark);
-  color: var(--white);
-}
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      padding-bottom: 100px;
+    }
 
-header {
-  background: #100b19;
-  border-bottom: 1px solid var(--border);
-  padding: 18px 5%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
+    button, a {
+      font: inherit;
+    }
 
-.logo {
-  font-size: 26px;
-  font-weight: 900;
-  letter-spacing: 1.5px;
-  color: #c084fc;
-}
+    button {
+      cursor: pointer;
+    }
 
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 5%;
+      background: #100b19;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
 
-.user-email {
-  color: var(--muted);
-  font-size: 13px;
-  overflow-wrap: anywhere;
-}
+    .logo {
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
 
-.logout {
-  background: transparent;
-  border: 1px solid var(--purple);
-  color: #c084fc;
-  padding: 10px 17px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-}
+    .logo span {
+      color: var(--violet);
+    }
 
-.logout:hover {
-  background: var(--purple);
-  color: white;
-}
+    .logout {
+      border: 1px solid var(--border);
+      background: transparent;
+      color: white;
+      padding: 9px 14px;
+      border-radius: 9px;
+    }
 
-main {
-  max-width: 1150px;
-  margin: 32px auto;
-  padding: 0 20px;
-}
+    .container {
+      width: 90%;
+      max-width: 1050px;
+      margin: 28px auto;
+    }
 
-.welcome {
-  margin-bottom: 26px;
-}
+    .page {
+      display: none;
+    }
 
-.welcome h1 {
-  font-size: 28px;
-  margin-bottom: 9px;
-}
+    .page.active {
+      display: block;
+    }
 
-.welcome p {
-  color: var(--muted);
-  font-size: 14px;
-}
+    .welcome {
+      margin-bottom: 22px;
+    }
 
-.wallet {
-  background: linear-gradient(120deg, #4c1683, #811bd4, #210d3a);
-  border: 1px solid #a855f7;
-  border-radius: 18px;
-  padding: 28px;
-  margin-bottom: 32px;
-  box-shadow: 0 8px 35px rgba(147,51,234,.18);
-}
+    .welcome h1 {
+      font-size: 25px;
+      margin-bottom: 7px;
+    }
 
-.wallet-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-}
+    .welcome p, .muted {
+      color: var(--muted);
+      font-size: 14px;
+    }
 
-.wallet-label {
-  font-size: 14px;
-  opacity: .9;
-}
+    .wallet-card {
+      background: linear-gradient(130deg, #581c87, #25113e 75%);
+      border: 1px solid #7434a6;
+      padding: 24px;
+      border-radius: 18px;
+      margin-bottom: 28px;
+    }
 
-.wallet h2 {
-  font-size: 35px;
-  margin: 12px 0;
-}
+    .wallet-card p {
+      color: #e9d5ff;
+      font-size: 14px;
+    }
 
-.wallet-note {
-  font-size: 12px;
-  opacity: .85;
-}
+    .balance {
+      font-size: 32px;
+      font-weight: 800;
+      margin: 12px 0 18px;
+    }
 
-.fund-btn {
-  background: white;
-  color: #7416bd;
-  border: none;
-  padding: 13px 20px;
-  border-radius: 9px;
-  font-weight: bold;
-  cursor: pointer;
-}
+    .primary-btn {
+      background: var(--violet);
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 9px;
+      font-weight: 700;
+    }
 
-.fund-btn:hover {
-  background: #ead5ff;
-}
+    .primary-btn:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
 
-.section-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 18px;
-}
+    .section-heading {
+      margin: 28px 0 15px;
+      font-size: 19px;
+    }
 
-.section-heading h2 {
-  font-size: 21px;
-}
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 13px;
+    }
 
-.section-heading span {
-  color: #c084fc;
-  font-size: 13px;
-}
+    .service-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 19px 13px;
+      color: white;
+      text-decoration: none;
+      transition: .2s;
+    }
 
-.services {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 17px;
-  margin-bottom: 35px;
-}
+    .service-card:hover {
+      border-color: var(--violet);
+      transform: translateY(-2px);
+    }
 
-.service-card {
-  display: block;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 15px;
-  padding: 23px;
-  text-decoration: none;
-  color: white;
-  transition: .25s;
-}
+    .service-icon {
+      font-size: 27px;
+      margin-bottom: 12px;
+    }
 
-.service-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--violet);
-  box-shadow: 0 8px 25px rgba(147,51,234,.15);
-}
+    .service-card h3 {
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
 
-.service-icon {
-  width: 49px;
-  height: 49px;
-  display: grid;
-  place-items: center;
-  background: #28143d;
-  border: 1px solid #542779;
-  border-radius: 13px;
-  font-size: 24px;
-  margin-bottom: 16px;
-}
+    .service-card p {
+      color: var(--muted);
+      font-size: 12px;
+    }
 
-.service-card h3 {
-  font-size: 16px;
-  margin-bottom: 9px;
-}
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 17px;
+    }
 
-.service-card p {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.6;
-}
+    .panel h2 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
 
-.service-link {
-  display: inline-block;
-  margin-top: 16px;
-  color: #c084fc;
-  font-weight: bold;
-  font-size: 13px;
-}
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
 
-.orders {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 15px;
-  padding: 23px;
-  margin-bottom: 30px;
-}
+    .info-row:last-child {
+      border-bottom: none;
+    }
 
-.order-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--border);
-}
+    .info-label {
+      color: var(--muted);
+    }
 
-.order-item:last-child {
-  border-bottom: none;
-}
+    .status {
+      display: inline-block;
+      padding: 6px 9px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
 
-.order-name {
-  font-weight: bold;
-  font-size: 14px;
-  margin-bottom: 6px;
-}
+    .status-pending {
+      background: #493713;
+      color: #facc15;
+    }
 
-.order-date {
-  color: var(--muted);
-  font-size: 12px;
-}
+    .status-processing {
+      background: #172d50;
+      color: #93c5fd;
+    }
 
-.order-amount {
-  font-weight: bold;
-  font-size: 14px;
-  margin-bottom: 7px;
-  text-align: right;
-}
+    .status-completed {
+      background: #123d2b;
+      color: #86efac;
+    }
 
-.status {
-  display: inline-block;
-  padding: 5px 9px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: bold;
-}
+    .status-failed {
+      background: #4b1d27;
+      color: #fda4af;
+    }
 
-.pending {
-  background: #493511;
-  color: #ffd166;
-}
+    .status-unknown {
+      background: #30213f;
+      color: #d8b4fe;
+    }
 
-.processing {
-  background: #182d55;
-  color: #8abaff;
-}
+    .transaction {
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 12px;
+    }
 
-.completed {
-  background: #123b29;
-  color: #71e6a3;
-}
+    .transaction-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
 
-.failed {
-  background: #4a1c29;
-  color: #ff9cae;
-}
+    .transaction h3 {
+      font-size: 14px;
+      text-transform: capitalize;
+    }
 
-.empty, .message {
-  color: var(--muted);
-  text-align: center;
-  padding: 22px 5px;
-  font-size: 14px;
-}
+    .transaction p {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 5px;
+      overflow-wrap: anywhere;
+    }
 
-footer {
-  text-align: center;
-  padding: 25px;
-  color: #796d89;
-  font-size: 12px;
-  border-top: 1px solid var(--border);
-}
+    .transaction-amount {
+      font-weight: 700;
+      margin-top: 8px;
+    }
 
-@media(max-width: 700px) {
-  main {
-    margin-top: 24px;
-    padding: 0 15px;
-  }
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 25px 10px;
+      font-size: 14px;
+    }
 
-  .services {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
+    .message {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
 
-  .service-card {
-    padding: 17px;
-  }
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      background: #100b19;
+      border-top: 1px solid var(--border);
+      padding: 9px 4px calc(9px + env(safe-area-inset-bottom));
+    }
 
-  .welcome h1 {
-    font-size: 23px;
-  }
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      padding: 5px 1px;
+    }
 
-  .user-email {
-    display: none;
-  }
-}
+    .nav-btn .nav-icon {
+      font-size: 19px;
+    }
 
-@media(max-width: 380px) {
-  .services {
-    grid-template-columns: 1fr;
-  }
+    .nav-btn.active {
+      color: var(--violet);
+      font-weight: 700;
+    }
 
-  .wallet-top {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-</style>
+    .profile-email {
+      overflow-wrap: anywhere;
+      max-width: 65%;
+      text-align: right;
+    }
+
+    @media (min-width: 750px) {
+      .container {
+        margin-top: 40px;
+      }
+
+      .welcome h1 {
+        font-size: 30px;
+      }
+
+      .bottom-nav {
+        max-width: 650px;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 1px solid var(--border);
+        border-bottom: none;
+        border-radius: 17px 17px 0 0;
+      }
+
+      .transaction {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .transaction-top {
+        margin: 0;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">VOLTIVA</div>
-  <div class="header-right">
-    <span class="user-email" id="userEmail">Loading account...</span>
+  <header class="topbar">
+    <div class="logo">VOLTI<span>VA</span></div>
     <button class="logout" id="logoutBtn">Log out</button>
-  </div>
-</header>
+  </header>
 
-<main>
+  <main class="container">
 
-<section class="welcome">
-  <h1 id="welcomeTitle">Welcome to Voltiva</h1>
-  <p>Your services, payments and transactions in one place.</p>
-</section>
+    <!-- HOME -->
+    <section class="page active" id="homePage">
+      <div class="welcome">
+        <h1>Welcome to Voltiva 👋</h1>
+        <p id="welcomeEmail">Loading your account...</p>
+      </div>
 
-<section class="wallet">
-  <div class="wallet-top">
-    <div>
-      <p class="wallet-label">Wallet Balance</p>
-      <h2>₦0.00</h2>
-      <p class="wallet-note">Wallet funding is not connected yet.</p>
-    </div>
-    <button class="fund-btn" id="fundBtn">+ Fund Wallet</button>
-  </div>
-</section>
+      <div class="wallet-card">
+        <p>Wallet Balance</p>
+        <div class="balance">₦0.00</div>
+        <button class="primary-btn" id="homeFundBtn">Fund Wallet</button>
+        <p class="message">Wallet funding is not connected yet.</p>
+      </div>
 
-<section>
-  <div class="section-heading">
-    <h2>Our Services</h2>
-    <span>Choose a service</span>
-  </div>
+      <h2 class="section-heading">Our Services</h2>
 
-  <div class="services">
+      <div class="services">
+        <a class="service-card" href="services.html?service=airtime">
+          <div class="service-icon">📱</div>
+          <h3>Airtime</h3>
+          <p>MTN, Airtel, Glo, 9mobile</p>
+        </a>
 
-    <a href="services.html?service=airtime" class="service-card">
-      <div class="service-icon">📱</div>
-      <h3>Buy Airtime</h3>
-      <p>MTN, Airtel, Glo and 9mobile recharge.</p>
-      <span class="service-link">Buy Airtime →</span>
-    </a>
+        <a class="service-card" href="services.html?service=data">
+          <div class="service-icon">🌐</div>
+          <h3>Data Bundles</h3>
+          <p>Buy mobile data</p>
+        </a>
 
-    <a href="services.html?service=data" class="service-card">
-      <div class="service-icon">🌐</div>
-      <h3>Buy Data</h3>
-      <p>Get affordable mobile data bundles.</p>
-      <span class="service-link">Buy Data →</span>
-    </a>
+        <a class="service-card" href="services.html?service=cable">
+          <div class="service-icon">📺</div>
+          <h3>Cable TV</h3>
+          <p>GOtv, DStv, Startimes</p>
+        </a>
 
-    <a href="services.html?service=cable" class="service-card">
-      <div class="service-icon">📺</div>
-      <h3>Cable TV</h3>
-      <p>GOtv, DStv and Startimes subscriptions.</p>
-      <span class="service-link">Pay Cable TV →</span>
-    </a>
+        <a class="service-card" href="services.html?service=electricity">
+          <div class="service-icon">💡</div>
+          <h3>Electricity</h3>
+          <p>Pay electricity bills</p>
+        </a>
 
-    <a href="services.html?service=electricity" class="service-card">
-      <div class="service-icon">💡</div>
-      <h3>Electricity</h3>
-      <p>Pay your electricity bills easily.</p>
-      <span class="service-link">Pay Electricity →</span>
-    </a>
+        <a class="service-card" href="services.html?service=boosting">
+          <div class="service-icon">🚀</div>
+          <h3>Social Boosting</h3>
+          <p>TikTok, Facebook, Instagram, YouTube</p>
+        </a>
+      </div>
 
-    <a href="services.html?service=boosting" class="service-card">
-      <div class="service-icon">🚀</div>
-      <h3>Social Media Boosting</h3>
-      <p>Promotion services for TikTok, Facebook, Instagram and YouTube.</p>
-      <span class="service-link">Explore Boosting →</span>
-    </a>
+      <h2 class="section-heading">Recent Activity</h2>
+      <div id="homeOrders">
+        <div class="empty">Loading recent activity...</div>
+      </div>
+    </section>
 
-  </div>
-</section>
+    <!-- TRANSACTIONS -->
+    <section class="page" id="transactionsPage">
+      <div class="welcome">
+        <h1>Transaction History</h1>
+        <p>View your order records.</p>
+      </div>
+      <div id="transactionList">
+        <div class="empty">Loading transactions...</div>
+      </div>
+    </section>
 
-<section class="orders">
-  <div class="section-heading">
-    <h2>Recent Transactions</h2>
-    <span>Latest orders</span>
-  </div>
-  <div id="ordersList" class="message">
-    Loading your transactions...
-  </div>
-</section>
-
-</main>
-
-<footer>
-  © 2026 Voltiva. All rights reserved.
-</footer>
-
-<script type="module">
-import { createClient } from
-"https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
-
-const SUPABASE_URL =
-"https://eoadvcorimdpriqzmcux.supabase.co";
-
-// Insert your existing Supabase publishable key below.
-const SUPABASE_PUBLISHABLE_KEY =
-"sb_publishable_pikDlVHyj8WV-EBv7b2v0Q_YmW0v75i";
-
-const supabase = createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
-
-const userEmail = document.getElementById("userEmail");
-const welcomeTitle = document.getElementById("welcomeTitle");
-const ordersList = document.getElementById("ordersList");
-
-let currentUser = null;
-
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
-  })[char]);
-}
-
-async function loadDashboard() {
-  const { data, error } = await supabase.auth.getSession();
-
-  if (error || !data.session) {
-    window.location.replace("login.html");
-    return;
-  }
-
-  currentUser = data.session.user;
-  userEmail.textContent = currentUser.email || "Voltiva Customer";
-
-  const name = currentUser.email
-    ? currentUser.email.split("@")[0]
-    : "Customer";
-
-  welcomeTitle.textContent = "Welcome, " + name;
-
-  await loadOrders();
-}
-
-async function loadOrders() {
-  ordersList.textContent = "Loading your transactions...";
-
-  const { data, error } = await supabase
-    .from("orders")
-    .select("id, service, amount, status, created_at")
-    .eq("user_id", currentUser.id)
-    .order("created_at", { ascending: false })
-    .limit(5);
-
-  if (error) {
-    console.error(error);
-    ordersList.textContent =
-      "Unable to load transactions. Please try again later.";
-    return;
-  }
-
-  if (!data || data.length === 0) {
-    ordersList.innerHTML =
-      '<div class="empty">You have no transactions yet.</div>';
-    return;
-  }
-
-  ordersList.innerHTML = data.map(order => {
-    const service = escapeHTML(order.service || "Service");
-    const status = String(order.status || "pending").toLowerCase();
-
-    const safeStatus = [
-      "pending", "processing", "completed", "failed"
-    ].includes(status) ? status : "pending";
-
-    const date = order.created_at
-      ? new Date(order.created_at).toLocaleString()
-      : "Date unavailable";
-
-    const amount = Number(order.amount);
-
-    const formattedAmount = Number.isFinite(amount)
-      ? "₦" + amount.toLocaleString("en-NG", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        })
-      : "Amount unavailable";
-
-    return `
-      <div class="order-item">
-        <div>
-          <div class="order-name">${service}</div>
-          <div class="order-date">${escapeHTML(date)}</div>
+    <!-- ORDER STATUS -->
+    <section class="page" id="statusPage">
+      <div class="welcome">
+        <h1>Order Status</h1>
+        <p>Check the latest status of your orders.</p>
+      </div>
+      <div class="panel">
+        <h2>What the statuses mean</h2>
+        <div class="info-row">
+          <span>Pending</span>
+          <span class="status status-pending">Pending</span>
         </div>
-        <div>
-          <div class="order-amount">${formattedAmount}</div>
-          <span class="status ${safeStatus}">
-            ${safeStatus.charAt(0).toUpperCase() + safeStatus.slice(1)}
-          </span>
+        <div class="info-row">
+          <span>Processing</span>
+          <span class="status status-processing">Processing</span>
+        </div>
+        <div class="info-row">
+          <span>Successful</span>
+          <span class="status status-completed">Successful</span>
+        </div>
+        <div class="info-row">
+          <span>Failed</span>
+          <span class="status status-failed">Failed</span>
         </div>
       </div>
-    `;
-  }).join("");
-}
+      <h2 class="section-heading">Your Orders</h2>
+      <div id="statusOrderList">
+        <div class="empty">Loading order statuses...</div>
+      </div>
+    </section>
 
-document.getElementById("logoutBtn").addEventListener("click", async () => {
-  const { error } = await supabase.auth.signOut();
+    <!-- WALLET -->
+    <section class="page" id="walletPage">
+      <div class="welcome">
+        <h1>My Wallet</h1>
+        <p>Manage your Voltiva wallet.</p>
+      </div>
+      <div class="wallet-card">
+        <p>Available Balance</p>
+        <div class="balance">₦0.00</div>
+        <button class="primary-btn" id="walletFundBtn" disabled>
+          Funding Coming Soon
+        </button>
+      </div>
+      <div class="panel">
+        <h2>Wallet Information</h2>
+        <p class="message">
+          Secure wallet funding is not connected yet. Your balance will only
+          change after a verified payment and secure wallet update.
+        </p>
+      </div>
+    </section>
 
-  if (error) {
-    alert("Unable to log out. Please try again.");
-    return;
-  }
+    <!-- PROFILE -->
+    <section class="page" id="profilePage">
+      <div class="welcome">
+        <h1>My Profile</h1>
+        <p>Your account information.</p>
+      </div>
+      <div class="panel">
+        <h2>Account Details</h2>
+        <div class="info-row">
+          <span class="info-label">Email address</span>
+          <strong class="profile-email" id="profileEmail">Loading...</strong>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Account status</span>
+          <strong>Signed in</strong>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Platform</span>
+          <strong>Voltiva</strong>
+        </div>
+        <button class="primary-btn" id="profileLogoutBtn" style="margin-top:18px">
+          Log out
+        </button>
+      </div>
+    </section>
 
-  window.location.replace("login.html");
-});
+  </main>
 
-document.getElementById("fundBtn").addEventListener("click", () => {
-  alert("Wallet funding is coming soon. Paybeta integration is not connected yet.");
-});
+  <!-- BOTTOM NAVIGATION -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-page="homePage">
+      <span class="nav-icon">⌂</span>
+      <span>Home</span>
+    </button>
 
-loadDashboard();
-</script>
+    <button class="nav-btn" data-page="transactionsPage">
+      <span class="nav-icon">▤</span>
+      <span>Transactions</span>
+    </button>
+
+    <button class="nav-btn" data-page="statusPage">
+      <span class="nav-icon">◷</span>
+      <span>Status</span>
+    </button>
+
+    <button class="nav-btn" data-page="walletPage">
+      <span class="nav-icon">◈</span>
+      <span>Wallet</span>
+    </button>
+
+    <button class="nav-btn" data-page="profilePage">
+      <span class="nav-icon">♙</span>
+      <span>Profile</span>
+    </button>
+  </nav>
+
+  <script type="module">
+    import { createClient } from
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    const SUPABASE_URL = "https://eoadvcorimdpriqzmcux.supabase.co";
+
+    // Replace this placeholder with your existing Supabase publishable key.
+    const SUPABASE_PUBLISHABLE_KEY =
+      "YOUR_EXISTING_SUPABASE_PUBLISHABLE_KEY";
+
+    const supabase = createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const pages = document.querySelectorAll(".page");
+    const navButtons = document.querySelectorAll(".nav-btn");
+
+    let currentUser = null;
+    let orders = [];
+
+    function showPage(pageId) {
+      pages.forEach(page => {
+        page.classList.toggle("active", page.id === pageId);
+      });
+
+      navButtons.forEach(button => {
+        button.classList.toggle(
+          "active",
+          button.dataset.page === pageId
+        );
+      });
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    navButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        showPage(button.dataset.page);
+      });
+    });
+
+    function escapeHTML(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[char]);
+    }
+
+    function formatAmount(amount) {
+      const number = Number(amount);
+      if (!Number.isFinite(number)) return "Amount unavailable";
+
+      return new Intl.NumberFormat("en-NG", {
+        style: "currency",
+        currency: "NGN"
+      }).format(number);
+    }
+
+    function formatDate(dateValue) {
+      if (!dateValue) return "Date unavailable";
+
+      const date = new Date(dateValue);
+      if (Number.isNaN(date.getTime())) return "Date unavailable";
+
+      return date.toLocaleString("en-NG", {
+        dateStyle: "medium",
+        timeStyle: "short"
+      });
+    }
+
+    function getStatus(statusValue) {
+      const value = String(statusValue || "").toLowerCase();
+
+      if (value === "completed" || value === "successful") {
+        return {
+          label: "Successful",
+          className: "status-completed"
+        };
+      }
+
+      if (value === "pending") {
+        return {
+          label: "Pending",
+          className: "status-pending"
+        };
+      }
+
+      if (value === "processing") {
+        return {
+          label: "Processing",
+          className: "status-processing"
+        };
+      }
+
+      if (value === "failed") {
+        return {
+          label: "Failed",
+          className: "status-failed"
+        };
+      }
+
+      return {
+        label: "Unknown",
+        className: "status-unknown"
+      };
+    }
+
+    function renderOrders(list, emptyMessage) {
+      if (!list.length) {
+        return `<div class="empty">${escapeHTML(emptyMessage)}</div>`;
+      }
+
+      return list.map(order => {
+        const status = getStatus(order.status);
+        const service = escapeHTML(order.service || "Service order");
+
+        return `
+          <article class="transaction">
+            <div>
+              <div class="transaction-top">
+                <h3>${service}</h3>
+                <span class="status ${status.className}">
+                  ${status.label}
+                </span>
+              </div>
+              <p>Order ID: ${escapeHTML(order.id || "Unavailable")}</p>
+              <p>${escapeHTML(formatDate(order.created_at))}</p>
+            </div>
+            <div class="transaction-amount">
+              ${escapeHTML(formatAmount(order.amount))}
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    async function loadOrders() {
+      const { data, error } = await supabase
+        .from("orders")
+        .select("id, service, product_code, customer_reference, amount, status, created_at")
+        .eq("user_id", currentUser.id)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Could not load orders:", error);
+
+        const errorHTML = `
+          <div class="empty">
+            Could not load your orders. Please check your internet
+            connection and Supabase orders-table permissions.
+          </div>
+        `;
+
+        document.getElementById("homeOrders").innerHTML = errorHTML;
+        document.getElementById("transactionList").innerHTML = errorHTML;
+        document.getElementById("statusOrderList").innerHTML = errorHTML;
+        return;
+      }
+
+      orders = data || [];
+
+      document.getElementById("homeOrders").innerHTML =
+        renderOrders(orders.slice(0, 3), "No orders yet.");
+
+      document.getElementById("transactionList").innerHTML =
+        renderOrders(orders, "Your transaction history is empty.");
+
+      document.getElementById("statusOrderList").innerHTML =
+        renderOrders(orders, "You do not have any orders yet.");
+    }
+
+    async function logout() {
+      const { error } = await supabase.auth.signOut();
+
+      if (error) {
+        alert("Could not log out. Please try again.");
+        return;
+      }
+
+      window.location.replace("login.html");
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", logout);
+    document.getElementById("profileLogoutBtn").addEventListener("click", logout);
+
+    function showFundingMessage() {
+      alert("Wallet funding is not connected yet. No payment has been made.");
+    }
+
+    document.getElementById("homeFundBtn")
+      .addEventListener("click", showFundingMessage);
+
+    async function startDashboard() {
+      if (
+        !SUPABASE_PUBLISHABLE_KEY ||
+        SUPABASE_PUBLISHABLE_KEY === "sb_publishable_pikDlVHyj8WV-EBv7b2v0Q_YmW0v75i"
+      ) {
+        alert("Add your Supabase publishable key in dashboard.html first.");
+        return;
+      }
+
+      const { data, error } = await supabase.auth.getSession();
+
+      if (error || !data.session) {
+        window.location.replace("login.html");
+        return;
+      }
+
+      currentUser = data.session.user;
+
+      const email = currentUser.email || "User";
+
+      document.getElementById("welcomeEmail").textContent = email;
+      document.getElementById("profileEmail").textContent = email;
+
+      await loadOrders();
+    }
+
+    startDashboard();
+  </script>
 
 </body>
 </html>
