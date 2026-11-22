@@ -1,134 +1,407 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Voltiva | Services</title>
+  <title>Voltiva | Place an Order</title>
+
   <style>
-    * { box-sizing: border-box; }
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      padding: 20px;
+      padding: 0;
+    }
+
+    body {
+      background: #090711;
+      color: #fff;
       font-family: Arial, sans-serif;
-      background: #f3f7ff;
-      color: #14213d;
+      padding: 20px 14px 40px;
+      min-height: 100vh;
     }
-    main {
-      max-width: 620px;
-      margin: 0 auto;
-      padding: 24px;
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 8px 28px #173b7518;
+
+    .container {
+      max-width: 560px;
+      margin: 20px auto;
     }
-    h1 { color: #1458c7; margin-top: 0; }
-    label { display: block; margin: 14px 0 6px; font-weight: 700; }
-    input, select, button {
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .logo span {
+      color: #a855f7;
+    }
+
+    .back {
+      color: #d8b4fe;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .card {
+      background: #151020;
+      border: 1px solid #30213f;
+      border-radius: 18px;
+      padding: 24px 19px;
+    }
+
+    h1 {
+      font-size: 25px;
+      margin-bottom: 9px;
+    }
+
+    .description {
+      color: #a69bb5;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      margin: 17px 0 8px;
+    }
+
+    input, select {
       width: 100%;
-      padding: 12px;
-      border: 1px solid #cbd6e8;
-      border-radius: 9px;
-      font-size: 16px;
+      padding: 14px;
+      background: #0e0a17;
+      border: 1px solid #40304f;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 15px;
+      outline: none;
     }
-    button {
-      margin-top: 20px;
-      border: 0;
-      background: #1458c7;
-      color: white;
+
+    input:focus, select:focus {
+      border-color: #a855f7;
+    }
+
+    select option {
+      background: #151020;
+    }
+
+    .submit {
+      width: 100%;
+      margin-top: 24px;
+      padding: 15px;
+      background: #9333ea;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
       font-weight: 700;
       cursor: pointer;
     }
-    .note { color: #5b6780; font-size: 14px; line-height: 1.5; }
-    #message { margin-top: 16px; font-weight: 700; }
-  </style>
-</head>
-<body>
-  <main>
-    <h1>Voltiva Services</h1>
-    <p class="note">Choose one of the four available services.</p>
 
-    <form id="orderForm">
-      <label for="service">Service</label>
-      <select id="service" name="service" required>
-        <option value="">Select a service</option>
-        <option value="airtime">Airtime</option>
-        <option value="data">Data Bundle</option>
-        <option value="cable">Cable TV</option>
-        <option value="electricity">Electricity</option>
-      </select>
-
-      <div id="providerField">
-        <label for="provider">Network / Provider</label>
-        <input id="provider" name="provider" placeholder="e.g. MTN, Airtel, GOTV">
-      </div>
-
-      <div id="phoneField">
-        <label for="phone">Phone number</label>
-        <input id="phone" name="phone" type="tel" inputmode="numeric" placeholder="Phone number">
-      </div>
-
-      <div id="accountField" hidden>
-        <label for="account">Smart-card / Meter number</label>
-        <input id="account" name="account" inputmode="numeric" placeholder="Enter account number">
-      </div>
-
-      <div id="meterTypeField" hidden>
-        <label for="meterType">Meter type</label>
-        <select id="meterType" name="meterType">
-          <option value="">Select meter type</option>
-          <option value="prepaid">Prepaid</option>
-          <option value="postpaid">Postpaid</option>
-        </select>
-      </div>
-
-      <label for="amount">Amount (₦)</label>
-      <input id="amount" name="amount" type="number" min="1" step="1" required>
-
-      <button type="submit">Continue</button>
-      <p id="message" role="status"></p>
-      <p class="note">Payment processing is not connected yet. No payment will be taken from this page.</p>
-    </form>
-  </main>
-
-  <script>
-    const service = document.getElementById("service");
-    const providerField = document.getElementById("providerField");
-    const phoneField = document.getElementById("phoneField");
-    const accountField = document.getElementById("accountField");
-    const meterTypeField = document.getElementById("meterTypeField");
-    const provider = document.getElementById("provider");
-    const phone = document.getElementById("phone");
-    const account = document.getElementById("account");
-    const meterType = document.getElementById("meterType");
-    const message = document.getElementById("message");
-
-    function updateFields() {
-      const selected = service.value;
-      const isCable = selected === "cable";
-      const isElectricity = selected === "electricity";
-      const isUtility = isCable || isElectricity;
-
-      providerField.hidden = isElectricity;
-      phoneField.hidden = isUtility;
-      accountField.hidden = !isUtility;
-      meterTypeField.hidden = !isElectricity;
-
-      provider.required = !isElectricity && selected !== "";
-      phone.required = !isUtility && selected !== "";
-      account.required = isUtility;
-      meterType.required = isElectricity;
-      account.placeholder = isCable ? "Smart-card number" : "Meter number";
+    .submit:disabled {
+      opacity: .6;
+      cursor: not-allowed;
     }
 
-    service.addEventListener("change", updateFields);
+    #orderMessage {
+      margin-top: 16px;
+      font-size: 14px;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
 
-    document.getElementById("orderForm").addEventListener("submit", function (event) {
-      event.preventDefault();
+    .note {
+      color: #a69bb5;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 20px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <header>
+      <div class="logo">VOLTI<span>VA</span></div>
+      <a class="back" href="dashboard.html">← Dashboard</a>
+    </header>
+
+    <main class="card">
+      <h1>Place an Order</h1>
+      <p class="description">
+        Select a service and enter the required details.
+        Your request will be saved to your Voltiva account.
+      </p>
+
+      <form id="orderForm" data-order-form>
+
+        <label for="service">Choose Service</label>
+        <select id="service" name="service" required>
+          <option value="">Select a service</option>
+          <option value="airtime">Airtime</option>
+          <option value="data">Data Bundles</option>
+          <option value="cable">Cable TV</option>
+          <option value="electricity">Electricity</option>
+          <option value="boosting">Social Media Boosting</option>
+        </select>
+
+        <label for="provider">Network / Platform / Provider</label>
+        <select id="provider" required>
+          <option value="">Select provider</option>
+        </select>
+
+        <label for="product">Select Product / Package</label>
+        <select id="product" required>
+          <option value="">Select a product</option>
+        </select>
+
+        <div id="meterSection" class="hidden">
+          <label for="meterType">Meter Type</label>
+          <select id="meterType">
+            <option value="">Select meter type</option>
+            <option value="prepaid">Prepaid</option>
+            <option value="postpaid">Postpaid</option>
+          </select>
+        </div>
+
+        <label for="customerReference" id="referenceLabel">
+          Phone Number / Account Details
+        </label>
+        <input
+          id="customerReference"
+          type="text"
+          placeholder="Enter recipient details"
+          maxlength="160"
+          required
+        >
+
+        <label for="amount">Amount (₦)</label>
+        <input
+          id="amount"
+          type="number"
+          min="1"
+          step="1"
+          placeholder="Enter amount"
+          required
+        >
+
+        <!-- Fields required by app.js -->
+        <input type="hidden" name="product_code" id="productCode">
+        <input type="hidden" name="customer_reference" id="referenceValue">
+
+        <button class="submit" type="submit" id="submitButton">
+          Submit Order Request
+        </button>
+
+        <p id="orderMessage" data-order-message role="status"></p>
+
+      </form>
+
+      <p class="note">
+        TEST ORDER NOTICE: This form records an order request in Supabase.
+        It does not charge your wallet, process a payment, or deliver a service.
+        Do not enter payment card details or passwords here.
+      </p>
+    </main>
+  </div>
+
+  <script type="module">
+    import { createClient } from
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    const SUPABASE_URL =
+      "https://eoadvcorimdpriqzmcux.supabase.co";
+
+    // Use your existing Supabase publishable key.
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_pikDlVHyj8WV-EBv7b2v0Q_YmW0v75i";
+
+    const message = document.getElementById("orderMessage");
+    const form = document.getElementById("orderForm");
+
+    if (
+      !SUPABASE_PUBLISHABLE_KEY ||
+      SUPABASE_PUBLISHABLE_KEY ===
+        "YOUR_EXISTING_SUPABASE_PUBLISHABLE_KEY"
+    ) {
       message.textContent =
-        "The form is ready, but Paybeta checkout still needs to be connected through the secure Vercel backend.";
-    });
+        "Setup needed: add your existing Supabase publishable key.";
+      document.getElementById("submitButton").disabled = true;
+    } else {
+      try {
+        window.supabaseClient = createClient(
+          SUPABASE_URL,
+          SUPABASE_PUBLISHABLE_KEY
+        );
 
-    updateFields();
+        // Load your existing order handler after Supabase is initialized.
+        await import("./app.js");
+
+        const { data, error } =
+          await window.supabaseClient.auth.getSession();
+
+        if (error || !data.session) {
+          message.textContent =
+            "Please log in before placing an order.";
+          document.getElementById("submitButton").disabled = true;
+        }
+      } catch (error) {
+        console.error(error);
+        message.textContent =
+          "Could not connect to the order system. Please try again.";
+        document.getElementById("submitButton").disabled = true;
+      }
+    }
+
+    const service = document.getElementById("service");
+    const provider = document.getElementById("provider");
+    const product = document.getElementById("product");
+    const meterType = document.getElementById("meterType");
+    const meterSection = document.getElementById("meterSection");
+    const reference = document.getElementById("customerReference");
+    const referenceLabel = document.getElementById("referenceLabel");
+
+    const providerOptions = {
+      airtime: ["MTN", "Airtel", "Glo", "9mobile"],
+      data: ["MTN", "Airtel", "Glo", "9mobile"],
+      cable: ["GOtv", "DStv", "Startimes"],
+      electricity: [
+        "Ikeja Electric",
+        "Eko Electric",
+        "Abuja Electric",
+        "Ibadan Electric",
+        "Other"
+      ],
+      boosting: ["TikTok", "Instagram", "Facebook", "YouTube"]
+    };
+
+    const productOptions = {
+      airtime: ["Airtime Top-up"],
+      data: [
+        "500MB Data",
+        "1GB Data",
+        "2GB Data",
+        "5GB Data",
+        "Other Data Plan"
+      ],
+      cable: [
+        "Subscription Renewal",
+        "Basic Package",
+        "Standard Package",
+        "Premium Package"
+      ],
+      electricity: ["Electricity Bill Payment"],
+      boosting: [
+        "Followers",
+        "Likes",
+        "Views",
+        "Shares",
+        "Comments"
+      ]
+    };
+
+    function fillSelect(select, options, firstText) {
+      select.innerHTML =
+        `<option value="">${firstText}</option>`;
+
+      options.forEach(option => {
+        const item = document.createElement("option");
+        item.value = option;
+        item.textContent = option;
+        select.appendChild(item);
+      });
+    }
+
+    function updateForm() {
+      const selected = service.value;
+
+      fillSelect(
+        provider,
+        providerOptions[selected] || [],
+        "Select provider"
+      );
+
+      fillSelect(
+        product,
+        productOptions[selected] || [],
+        "Select product"
+      );
+
+      meterSection.classList.toggle(
+        "hidden",
+        selected !== "electricity"
+      );
+
+      meterType.required = selected === "electricity";
+
+      if (selected === "cable") {
+        referenceLabel.textContent = "Smart-card / Decoder Number";
+        reference.placeholder = "Enter your decoder number";
+      } else if (selected === "electricity") {
+        referenceLabel.textContent = "Meter Number";
+        reference.placeholder = "Enter your meter number";
+      } else if (selected === "boosting") {
+        referenceLabel.textContent = "Profile URL or Username";
+        reference.placeholder = "Enter the public profile URL or username";
+      } else {
+        referenceLabel.textContent = "Phone Number";
+        reference.placeholder = "Enter recipient phone number";
+      }
+    }
+
+    service.addEventListener("change", updateForm);
+
+    // Read the service selected from the dashboard URL.
+    const requestedService =
+      new URLSearchParams(window.location.search).get("service");
+
+    if (requestedService &&
+        Object.hasOwn(providerOptions, requestedService)) {
+      service.value = requestedService;
+      updateForm();
+    }
+
+    // Build the product code and customer reference for app.js.
+    form.addEventListener("submit", function () {
+      const selectedService = service.value;
+      const selectedProvider = provider.value;
+      const selectedProduct = product.value;
+      const selectedMeter = meterType.value;
+
+      const parts = [
+        selectedService,
+        selectedProvider,
+        selectedProduct
+      ];
+
+      if (selectedService === "electricity") {
+        parts.push(selectedMeter);
+      }
+
+      const productCode = parts
+        .filter(Boolean)
+        .join("_")
+        .toLowerCase()
+        .replace(/[^a-z0-9_]+/g, "_");
+
+      document.getElementById("productCode").value = productCode;
+
+      document.getElementById("referenceValue").value =
+        reference.value.trim();
+    });
   </script>
 </body>
 </html>
