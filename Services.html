@@ -4,218 +4,183 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Voltiva | Place an Order</title>
+  <title>Voltiva | Place Order</title>
 
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      font-family: Arial, sans-serif;
     }
 
     body {
-      background: #090711;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      padding: 20px 14px 40px;
+      background: #100d19;
+      color: white;
+      padding: 20px;
       min-height: 100vh;
     }
 
     .container {
-      max-width: 560px;
-      margin: 20px auto;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: 800;
-    }
-
-    .logo span {
-      color: #a855f7;
-    }
-
-    .back {
-      color: #d8b4fe;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    .card {
-      background: #151020;
-      border: 1px solid #30213f;
+      max-width: 520px;
+      margin: 25px auto;
+      background: #1c1729;
+      padding: 25px;
       border-radius: 18px;
-      padding: 24px 19px;
+      border: 1px solid #382b50;
     }
 
     h1 {
-      font-size: 25px;
-      margin-bottom: 9px;
+      color: #b78aff;
+      margin-bottom: 8px;
+      text-align: center;
     }
 
-    .description {
-      color: #a69bb5;
+    .subtitle {
+      color: #bcb3ca;
+      text-align: center;
+      margin-bottom: 25px;
       font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 22px;
     }
 
     label {
       display: block;
-      font-size: 14px;
-      font-weight: 700;
       margin: 17px 0 8px;
+      font-weight: bold;
+      color: #e4d8ff;
     }
 
     input, select {
       width: 100%;
       padding: 14px;
-      background: #0e0a17;
-      border: 1px solid #40304f;
       border-radius: 10px;
-      color: #fff;
-      font-size: 15px;
+      border: 1px solid #51416d;
+      background: #100d19;
+      color: white;
       outline: none;
+      font-size: 15px;
     }
 
     input:focus, select:focus {
-      border-color: #a855f7;
+      border-color: #a66cff;
     }
 
-    select option {
-      background: #151020;
-    }
-
-    .submit {
+    button {
       width: 100%;
-      margin-top: 24px;
       padding: 15px;
-      background: #9333ea;
-      color: #fff;
+      margin-top: 24px;
       border: none;
       border-radius: 10px;
+      background: #8b45e8;
+      color: white;
+      font-weight: bold;
       font-size: 16px;
-      font-weight: 700;
       cursor: pointer;
     }
 
-    .submit:disabled {
+    button:disabled {
       opacity: .6;
       cursor: not-allowed;
     }
 
-    #orderMessage {
-      margin-top: 16px;
-      font-size: 14px;
-      line-height: 1.6;
+    .message {
+      margin-top: 18px;
+      padding: 12px;
+      border-radius: 9px;
+      display: none;
+      line-height: 1.5;
       overflow-wrap: anywhere;
     }
 
-    .note {
-      color: #a69bb5;
-      font-size: 12px;
-      line-height: 1.6;
-      margin-top: 20px;
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 22px;
+      color: #c49aff;
+      text-decoration: none;
     }
 
-    .hidden {
-      display: none;
+    .note {
+      color: #bcb3ca;
+      font-size: 12px;
+      margin-top: 15px;
+      line-height: 1.5;
     }
   </style>
 </head>
 
 <body>
   <div class="container">
+    <h1>Voltiva</h1>
+    <p class="subtitle">Place your service order</p>
 
-    <header>
-      <div class="logo">VOLTI<span>VA</span></div>
-      <a class="back" href="dashboard.html">← Dashboard</a>
-    </header>
+    <form id="orderForm" data-order-form>
 
-    <main class="card">
-      <h1>Place an Order</h1>
-      <p class="description">
-        Select a service and enter the required details.
-        Your request will be saved to your Voltiva account.
-      </p>
+      <label for="service">Choose Service</label>
+      <select id="service" name="service" required>
+        <option value="">Select service</option>
+        <option value="airtime">Airtime</option>
+        <option value="data">Data Bundles</option>
+        <option value="cable">Cable TV</option>
+        <option value="electricity">Electricity</option>
+        <option value="boosting">Social Media Boosting</option>
+      </select>
 
-      <form id="orderForm" data-order-form>
+      <label for="provider">Choose Provider</label>
+      <select id="provider" required>
+        <option value="">Select provider</option>
+      </select>
 
-        <label for="service">Choose Service</label>
-        <select id="service" name="service" required>
-          <option value="">Select a service</option>
-          <option value="airtime">Airtime</option>
-          <option value="data">Data Bundles</option>
-          <option value="cable">Cable TV</option>
-          <option value="electricity">Electricity</option>
-          <option value="boosting">Social Media Boosting</option>
+      <label for="product">Choose Product</label>
+      <select id="product" required>
+        <option value="">Select product</option>
+      </select>
+
+      <div id="meterArea" hidden>
+        <label for="meterType">Meter Type</label>
+        <select id="meterType">
+          <option value="prepaid">Prepaid</option>
+          <option value="postpaid">Postpaid</option>
         </select>
+      </div>
 
-        <label for="provider">Network / Platform / Provider</label>
-        <select id="provider" required>
-          <option value="">Select provider</option>
-        </select>
+      <label for="reference" id="referenceLabel">
+        Phone Number / Customer Reference
+      </label>
+      <input
+        id="reference"
+        type="text"
+        placeholder="Enter customer reference"
+        required
+      >
 
-        <label for="product">Select Product / Package</label>
-        <select id="product" required>
-          <option value="">Select a product</option>
-        </select>
+      <label for="amount">Amount (₦)</label>
+      <input
+        id="amount"
+        name="amount"
+        type="number"
+        min="1"
+        step="1"
+        placeholder="Enter amount"
+        required
+      >
 
-        <div id="meterSection" class="hidden">
-          <label for="meterType">Meter Type</label>
-          <select id="meterType">
-            <option value="">Select meter type</option>
-            <option value="prepaid">Prepaid</option>
-            <option value="postpaid">Postpaid</option>
-          </select>
-        </div>
+      <input type="hidden" name="product_code" id="productCode">
+      <input type="hidden" name="customer_reference" id="customerReference">
 
-        <label for="customerReference" id="referenceLabel">
-          Phone Number / Account Details
-        </label>
-        <input
-          id="customerReference"
-          type="text"
-          placeholder="Enter recipient details"
-          maxlength="160"
-          required
-        >
+      <button type="submit" id="submitButton">
+        Submit Order
+      </button>
 
-        <label for="amount">Amount (₦)</label>
-        <input
-          id="amount"
-          type="number"
-          min="1"
-          step="1"
-          placeholder="Enter amount"
-          required
-        >
+      <div class="message" id="message" role="status"></div>
+    </form>
 
-        <!-- Fields required by app.js -->
-        <input type="hidden" name="product_code" id="productCode">
-        <input type="hidden" name="customer_reference" id="referenceValue">
+    <p class="note">
+      This form records an order request. It does not charge your account
+      or confirm service delivery.
+    </p>
 
-        <button class="submit" type="submit" id="submitButton">
-          Submit Order Request
-        </button>
-
-        <p id="orderMessage" data-order-message role="status"></p>
-
-      </form>
-
-      <p class="note">
-        TEST ORDER NOTICE: This form records an order request in Supabase.
-        It does not charge your wallet, process a payment, or deliver a service.
-        Do not enter payment card details or passwords here.
-      </p>
-    </main>
+    <a class="back" href="dashboard.html">← Back to Dashboard</a>
   </div>
 
   <script type="module">
@@ -225,182 +190,162 @@
     const SUPABASE_URL =
       "https://eoadvcorimdpriqzmcux.supabase.co";
 
-    // Use your existing Supabase publishable key.
+    // Replace this first placeholder with your existing publishable key.
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_pikDlVHyj8WV-EBv7b2v0Q_YmW0v75i";
 
-    const message = document.getElementById("orderMessage");
-    const form = document.getElementById("orderForm");
+    const supabaseClient = createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
 
-    if (
-      !SUPABASE_PUBLISHABLE_KEY ||
-      SUPABASE_PUBLISHABLE_KEY ===
-        "YOUR_EXISTING_SUPABASE_PUBLISHABLE_KEY"
-    ) {
-      message.textContent =
-        "Setup needed: add your existing Supabase publishable key.";
-      document.getElementById("submitButton").disabled = true;
-    } else {
-      try {
-        window.supabaseClient = createClient(
-          SUPABASE_URL,
-          SUPABASE_PUBLISHABLE_KEY
-        );
-
-        // Load your existing order handler after Supabase is initialized.
-        await import("./app.js");
-
-        const { data, error } =
-          await window.supabaseClient.auth.getSession();
-
-        if (error || !data.session) {
-          message.textContent =
-            "Please log in before placing an order.";
-          document.getElementById("submitButton").disabled = true;
-        }
-      } catch (error) {
-        console.error(error);
-        message.textContent =
-          "Could not connect to the order system. Please try again.";
-        document.getElementById("submitButton").disabled = true;
-      }
-    }
+    window.supabaseClient = supabaseClient;
 
     const service = document.getElementById("service");
     const provider = document.getElementById("provider");
     const product = document.getElementById("product");
+    const reference = document.getElementById("reference");
+    const amount = document.getElementById("amount");
+    const productCode = document.getElementById("productCode");
+    const customerReference =
+      document.getElementById("customerReference");
+    const meterArea = document.getElementById("meterArea");
     const meterType = document.getElementById("meterType");
-    const meterSection = document.getElementById("meterSection");
-    const reference = document.getElementById("customerReference");
-    const referenceLabel = document.getElementById("referenceLabel");
+    const referenceLabel =
+      document.getElementById("referenceLabel");
+    const form = document.getElementById("orderForm");
+    const message = document.getElementById("message");
+    const submitButton =
+      document.getElementById("submitButton");
 
-    const providerOptions = {
-      airtime: ["MTN", "Airtel", "Glo", "9mobile"],
-      data: ["MTN", "Airtel", "Glo", "9mobile"],
-      cable: ["GOtv", "DStv", "Startimes"],
-      electricity: [
-        "Ikeja Electric",
-        "Eko Electric",
-        "Abuja Electric",
-        "Ibadan Electric",
-        "Other"
-      ],
-      boosting: ["TikTok", "Instagram", "Facebook", "YouTube"]
+    const catalog = {
+      airtime: {
+        providers: {
+          MTN: ["Airtime Top-up"],
+          Airtel: ["Airtime Top-up"],
+          Glo: ["Airtime Top-up"],
+          "9mobile": ["Airtime Top-up"]
+        }
+      },
+      data: {
+        providers: {
+          MTN: ["Data Bundle"],
+          Airtel: ["Data Bundle"],
+          Glo: ["Data Bundle"],
+          "9mobile": ["Data Bundle"]
+        }
+      },
+      cable: {
+        providers: {
+          GOtv: ["Subscription"],
+          DStv: ["Subscription"],
+          Startimes: ["Subscription"]
+        }
+      },
+      electricity: {
+        providers: {
+          "Electricity Provider": ["Electricity Bill"]
+        }
+      },
+      boosting: {
+        providers: {
+          TikTok: ["Followers", "Likes", "Views", "Shares", "Comments"],
+          Instagram: ["Followers", "Likes", "Views", "Comments"],
+          Facebook: ["Followers", "Likes", "Views", "Shares"],
+          YouTube: ["Views", "Likes", "Subscribers"]
+        }
+      }
     };
 
-    const productOptions = {
-      airtime: ["Airtime Top-up"],
-      data: [
-        "500MB Data",
-        "1GB Data",
-        "2GB Data",
-        "5GB Data",
-        "Other Data Plan"
-      ],
-      cable: [
-        "Subscription Renewal",
-        "Basic Package",
-        "Standard Package",
-        "Premium Package"
-      ],
-      electricity: ["Electricity Bill Payment"],
-      boosting: [
-        "Followers",
-        "Likes",
-        "Views",
-        "Shares",
-        "Comments"
-      ]
-    };
+    function fillSelect(element, values, firstText) {
+      element.innerHTML = "";
+      element.add(new Option(firstText, ""));
 
-    function fillSelect(select, options, firstText) {
-      select.innerHTML =
-        `<option value="">${firstText}</option>`;
-
-      options.forEach(option => {
-        const item = document.createElement("option");
-        item.value = option;
-        item.textContent = option;
-        select.appendChild(item);
+      values.forEach(value => {
+        element.add(new Option(value, value));
       });
     }
 
-    function updateForm() {
-      const selected = service.value;
+    function updateProviders() {
+      const selectedService = service.value;
+      const providers = catalog[selectedService]
+        ? Object.keys(catalog[selectedService].providers)
+        : [];
 
-      fillSelect(
-        provider,
-        providerOptions[selected] || [],
-        "Select provider"
-      );
+      fillSelect(provider, providers, "Select provider");
+      fillSelect(product, [], "Select product");
 
-      fillSelect(
-        product,
-        productOptions[selected] || [],
-        "Select product"
-      );
+      meterArea.hidden = selectedService !== "electricity";
 
-      meterSection.classList.toggle(
-        "hidden",
-        selected !== "electricity"
-      );
-
-      meterType.required = selected === "electricity";
-
-      if (selected === "cable") {
-        referenceLabel.textContent = "Smart-card / Decoder Number";
-        reference.placeholder = "Enter your decoder number";
-      } else if (selected === "electricity") {
+      if (selectedService === "boosting") {
+        referenceLabel.textContent = "Social Media Profile URL / Username";
+        reference.placeholder = "Enter your profile URL or username";
+      } else if (selectedService === "cable") {
+        referenceLabel.textContent = "Decoder / Smartcard Number";
+        reference.placeholder = "Enter decoder number";
+      } else if (selectedService === "electricity") {
         referenceLabel.textContent = "Meter Number";
-        reference.placeholder = "Enter your meter number";
-      } else if (selected === "boosting") {
-        referenceLabel.textContent = "Profile URL or Username";
-        reference.placeholder = "Enter the public profile URL or username";
+        reference.placeholder = "Enter meter number";
       } else {
         referenceLabel.textContent = "Phone Number";
-        reference.placeholder = "Enter recipient phone number";
+        reference.placeholder = "Enter phone number";
       }
     }
 
-    service.addEventListener("change", updateForm);
+    service.addEventListener("change", updateProviders);
 
-    // Read the service selected from the dashboard URL.
-    const requestedService =
-      new URLSearchParams(window.location.search).get("service");
+    provider.addEventListener("change", () => {
+      const options = catalog[service.value]?.providers[provider.value] || [];
+      fillSelect(product, options, "Select product");
+    });
 
-    if (requestedService &&
-        Object.hasOwn(providerOptions, requestedService)) {
+    const params = new URLSearchParams(window.location.search);
+    const requestedService = params.get("service");
+
+    if (requestedService && catalog[requestedService]) {
       service.value = requestedService;
-      updateForm();
+      updateProviders();
     }
 
-    // Build the product code and customer reference for app.js.
-    form.addEventListener("submit", function () {
+    await import("./app.js");
+
+    const { data: { session }, error } =
+      await supabaseClient.auth.getSession();
+
+    if (error || !session) {
+      message.style.display = "block";
+      message.style.background = "#542d35";
+      message.textContent =
+        "Please sign in before placing an order.";
+      submitButton.disabled = true;
+    }
+
+    // Runs before the app.js document-level submit handler.
+    form.addEventListener("submit", () => {
       const selectedService = service.value;
       const selectedProvider = provider.value;
       const selectedProduct = product.value;
-      const selectedMeter = meterType.value;
+      const enteredReference = reference.value.trim();
 
-      const parts = [
-        selectedService,
-        selectedProvider,
-        selectedProduct
-      ];
+      productCode.value =
+        selectedService + "_" +
+        selectedProvider.toLowerCase().replace(/[^a-z0-9]+/g, "_") +
+        "_" +
+        selectedProduct.toLowerCase().replace(/[^a-z0-9]+/g, "_");
+
+      customerReference.value = enteredReference;
 
       if (selectedService === "electricity") {
-        parts.push(selectedMeter);
+        customerReference.value =
+          enteredReference + " (" + meterType.value + ")";
       }
+    });
 
-      const productCode = parts
-        .filter(Boolean)
-        .join("_")
-        .toLowerCase()
-        .replace(/[^a-z0-9_]+/g, "_");
-
-      document.getElementById("productCode").value = productCode;
-
-      document.getElementById("referenceValue").value =
-        reference.value.trim();
+    window.addEventListener("voltiva-order-result", event => {
+      message.style.display = "block";
+      message.style.background =
+        event.detail.success ? "#204b37" : "#542d35";
+      message.textContent = event.detail.message;
     });
   </script>
 </body>
