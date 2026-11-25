@@ -1,140 +1,64 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100d19">
   <title>Voltiva | Place Order</title>
-
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      background: #100d19;
-      color: white;
-      padding: 20px;
-      min-height: 100vh;
-    }
-
-    .container {
-      max-width: 520px;
-      margin: 25px auto;
-      background: #1c1729;
-      padding: 25px;
-      border-radius: 18px;
-      border: 1px solid #382b50;
-    }
-
-    h1 {
-      color: #b78aff;
-      margin-bottom: 8px;
-      text-align: center;
-    }
-
-    .subtitle {
-      color: #bcb3ca;
-      text-align: center;
-      margin-bottom: 25px;
-      font-size: 14px;
-    }
-
-    label {
-      display: block;
-      margin: 17px 0 8px;
-      font-weight: bold;
-      color: #e4d8ff;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 14px;
-      border-radius: 10px;
-      border: 1px solid #51416d;
-      background: #100d19;
-      color: white;
-      outline: none;
-      font-size: 15px;
-    }
-
-    input:focus, select:focus {
-      border-color: #a66cff;
-    }
-
-    button {
-      width: 100%;
-      padding: 15px;
-      margin-top: 24px;
-      border: none;
-      border-radius: 10px;
-      background: #8b45e8;
-      color: white;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:disabled {
-      opacity: .6;
-      cursor: not-allowed;
-    }
-
-    .message {
-      margin-top: 18px;
-      padding: 12px;
-      border-radius: 9px;
-      display: none;
-      line-height: 1.5;
-      overflow-wrap: anywhere;
-    }
-
-    .back {
-      display: block;
-      text-align: center;
-      margin-top: 22px;
-      color: #c49aff;
-      text-decoration: none;
-    }
-
-    .note {
-      color: #bcb3ca;
-      font-size: 12px;
-      margin-top: 15px;
-      line-height: 1.5;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    body { background: #100d19; color: #fff; padding: 18px; min-height: 100vh; }
+    .container { max-width: 520px; margin: 24px auto; background: #1c1729; padding: 24px; border-radius: 18px; border: 1px solid #382b50; }
+    h1 { color: #b78aff; margin-bottom: 8px; text-align: center; }
+    .subtitle { color: #bcb3ca; text-align: center; margin-bottom: 22px; font-size: 14px; line-height: 1.5; }
+    .service-pill { width: fit-content; margin: 0 auto 16px; padding: 8px 14px; border-radius: 30px; background: #332248; color: #d9bdff; font-size: 13px; font-weight: bold; }
+    label { display: block; margin: 16px 0 8px; font-weight: bold; color: #e4d8ff; }
+    input, select { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #51416d; background: #100d19; color: #fff; outline: none; font-size: 15px; }
+    input:focus, select:focus { border-color: #a66cff; }
+    input::placeholder { color: #9388a5; }
+    button { width: 100%; padding: 15px; margin-top: 23px; border: 0; border-radius: 10px; background: #8b45e8; color: #fff; font-weight: bold; font-size: 16px; cursor: pointer; }
+    button:disabled { opacity: .6; cursor: not-allowed; }
+    .message { margin-top: 18px; padding: 12px; border-radius: 9px; display: none; line-height: 1.5; overflow-wrap: anywhere; }
+    .back { display: block; text-align: center; margin-top: 22px; color: #c49aff; text-decoration: none; }
+    .note { color: #bcb3ca; font-size: 12px; margin-top: 15px; line-height: 1.5; }
+    .hint { color: #bcb3ca; font-size: 12px; margin-top: 7px; line-height: 1.5; }
+    .missing { text-align: center; color: #e4d8ff; line-height: 1.6; padding: 18px 4px; }
+    .missing a { color: #c49aff; }
+    [hidden] { display: none !important; }
   </style>
 </head>
-
 <body>
-  <div class="container">
+  <main class="container">
     <h1>Voltiva</h1>
-    <p class="subtitle">Place your service order</p>
+    <p class="subtitle">Enter your details below to place your order.</p>
 
-    <form id="orderForm" data-order-form>
+    <div id="servicePill" class="service-pill" hidden></div>
 
-      <label for="service">Choose Service</label>
-      <select id="service" name="service" required>
-        <option value="">Select service</option>
-        <option value="airtime">Airtime</option>
-        <option value="data">Data Bundles</option>
-        <option value="cable">Cable TV</option>
-        <option value="electricity">Electricity</option>
-        <option value="boosting">Social Media Boosting</option>
-      </select>
+    <div id="missingService" class="missing" hidden>
+      <p>Please open a service from your dashboard so the correct order form can appear.</p>
+      <a class="back" href="dashboard.html">← Back to Dashboard</a>
+    </div>
 
-      <label for="provider">Choose Provider</label>
-      <select id="provider" required>
-        <option value="">Select provider</option>
-      </select>
+    <form id="orderForm" data-order-form hidden>
+      <!-- The service is selected by the dashboard link, not by an extra dropdown. -->
+      <input type="hidden" id="service" name="service">
+      <input type="hidden" id="productCode" name="product_code">
+      <input type="hidden" id="customerReference" name="customer_reference">
 
-      <label for="product">Choose Product</label>
-      <select id="product" required>
-        <option value="">Select product</option>
-      </select>
+      <div id="providerArea">
+        <label id="providerLabel" for="provider">Network / Provider</label>
+        <select id="provider" required>
+          <option value="">Select provider</option>
+        </select>
+      </div>
+
+      <div id="productArea">
+        <label id="productLabel" for="product">Plan / Package</label>
+        <select id="product" required>
+          <option value="">Select an option</option>
+        </select>
+        <p id="productHint" class="hint"></p>
+      </div>
 
       <div id="meterArea" hidden>
         <label for="meterType">Meter Type</label>
@@ -144,208 +68,226 @@
         </select>
       </div>
 
-      <label for="reference" id="referenceLabel">
-        Phone Number / Customer Reference
-      </label>
-      <input
-        id="reference"
-        type="text"
-        placeholder="Enter customer reference"
-        required
-      >
+      <label id="referenceLabel" for="reference">Phone Number</label>
+      <input id="reference" type="text" placeholder="Enter phone number" required>
 
-      <label for="amount">Amount (₦)</label>
-      <input
-        id="amount"
-        name="amount"
-        type="number"
-        min="1"
-        step="1"
-        placeholder="Enter amount"
-        required
-      >
+      <div id="amountArea">
+        <label for="amount">Amount (₦)</label>
+        <input id="amount" name="amount" type="number" min="1" step="1" placeholder="Enter amount" required>
+      </div>
 
-      <input type="hidden" name="product_code" id="productCode">
-      <input type="hidden" name="customer_reference" id="customerReference">
-
-      <button type="submit" id="submitButton">
-        Submit Order
-      </button>
-
-      <div class="message" id="message" role="status"></div>
+      <button type="submit" id="submitButton">Submit Order</button>
+      <div class="message" id="message" role="status" aria-live="polite"></div>
     </form>
 
     <p class="note">
-      This form records an order request. It does not charge your account
-      or confirm service delivery.
+      This form records an order request. It does not charge your wallet or confirm service delivery.
     </p>
-
     <a class="back" href="dashboard.html">← Back to Dashboard</a>
-  </div>
+  </main>
 
   <script type="module">
-    import { createClient } from
-      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-    const SUPABASE_URL =
-      "https://eoadvcorimdpriqzmcux.supabase.co";
+    const SUPABASE_URL = "https://eoadvcorimdpriqzmcux.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_pikDlVHyj8WV-EBv7b2v0Q_YmW0v75i";
 
-    // Replace this first placeholder with your existing publishable key.
-    const SUPABASE_PUBLISHABLE_KEY =
-      "sb_publishable_pikDlVHyj8WV-EBv7b2v0Q_YmW0v75i";
-
-    const supabaseClient = createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
-
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
     window.supabaseClient = supabaseClient;
 
-    const service = document.getElementById("service");
-    const provider = document.getElementById("provider");
-    const product = document.getElementById("product");
-    const reference = document.getElementById("reference");
-    const amount = document.getElementById("amount");
-    const productCode = document.getElementById("productCode");
-    const customerReference =
-      document.getElementById("customerReference");
-    const meterArea = document.getElementById("meterArea");
-    const meterType = document.getElementById("meterType");
-    const referenceLabel =
-      document.getElementById("referenceLabel");
-    const form = document.getElementById("orderForm");
-    const message = document.getElementById("message");
-    const submitButton =
-      document.getElementById("submitButton");
+    const $ = id => document.getElementById(id);
+    const form = $("orderForm");
+    const serviceInput = $("service");
+    const provider = $("provider");
+    const product = $("product");
+    const reference = $("reference");
+    const amount = $("amount");
+    const productCode = $("productCode");
+    const customerReference = $("customerReference");
+    const message = $("message");
+    const submitButton = $("submitButton");
+    const params = new URLSearchParams(window.location.search);
+    const requestedService = (params.get("service") || "").toLowerCase();
 
-    const catalog = {
+    const config = {
       airtime: {
-        providers: {
-          MTN: ["Airtime Top-up"],
-          Airtel: ["Airtime Top-up"],
-          Glo: ["Airtime Top-up"],
-          "9mobile": ["Airtime Top-up"]
-        }
+        title: "Airtime",
+        providers: ["MTN", "Airtel", "Glo", "9mobile"],
+        providerLabel: "Network",
+        productLabel: "Airtime Type",
+        products: ["Airtime Top-up"],
+        referenceLabel: "Phone Number",
+        placeholder: "Enter the phone number to recharge",
+        referenceType: "phone",
+        amountLabel: "Airtime Amount (₦)"
       },
       data: {
-        providers: {
-          MTN: ["Data Bundle"],
-          Airtel: ["Data Bundle"],
-          Glo: ["Data Bundle"],
-          "9mobile": ["Data Bundle"]
-        }
+        title: "Data Bundles",
+        providers: ["MTN", "Airtel", "Glo", "9mobile"],
+        providerLabel: "Network",
+        productLabel: "Data Plan",
+        products: ["Enter plan in the box below"],
+        referenceLabel: "Phone Number",
+        placeholder: "Enter the phone number receiving data",
+        referenceType: "phone",
+        amountLabel: "Amount (₦)",
+        productHint: "Choose the option, then enter the exact data plan in the field that appears."
       },
       cable: {
-        providers: {
-          GOtv: ["Subscription"],
-          DStv: ["Subscription"],
-          Startimes: ["Subscription"]
-        }
+        title: "Cable TV",
+        providers: ["GOtv", "DStv", "Startimes"],
+        providerLabel: "TV Provider",
+        productLabel: "Subscription Package",
+        products: ["Enter package in the box below"],
+        referenceLabel: "Smartcard / IUC Number",
+        placeholder: "Enter decoder smartcard number",
+        referenceType: "account",
+        amountLabel: "Amount (₦)",
+        productHint: "Enter the name of the subscription package you want."
       },
       electricity: {
-        providers: {
-          "Electricity Provider": ["Electricity Bill"]
-        }
+        title: "Electricity",
+        providers: ["Choose your electricity distribution company"],
+        providerLabel: "Electricity Distribution Company",
+        productLabel: "Payment Type",
+        products: ["Electricity Bill"],
+        referenceLabel: "Meter Number",
+        placeholder: "Enter meter number",
+        referenceType: "meter",
+        amountLabel: "Amount (₦)",
+        meter: true
       },
       boosting: {
-        providers: {
-          TikTok: ["Followers", "Likes", "Views", "Shares", "Comments"],
-          Instagram: ["Followers", "Likes", "Views", "Comments"],
-          Facebook: ["Followers", "Likes", "Views", "Shares"],
-          YouTube: ["Views", "Likes", "Subscribers"]
-        }
+        title: "Social Media Boosting",
+        providers: ["TikTok", "Instagram", "Facebook", "YouTube"],
+        providerLabel: "Platform",
+        productLabel: "Boosting Service",
+        products: ["Followers", "Likes", "Views", "Shares", "Comments", "Subscribers"],
+        referenceLabel: "Profile / Post URL",
+        placeholder: "Paste the public profile or post link",
+        referenceType: "url",
+        amountLabel: "Amount (₦)",
+        productHint: "Choose the type of promotion you want. Only use services that comply with the platform's rules."
       }
     };
 
     function fillSelect(element, values, firstText) {
-      element.innerHTML = "";
-      element.add(new Option(firstText, ""));
-
-      values.forEach(value => {
-        element.add(new Option(value, value));
-      });
+      element.replaceChildren(new Option(firstText, ""));
+      values.forEach(value => element.add(new Option(value, value)));
     }
 
-    function updateProviders() {
-      const selectedService = service.value;
-      const providers = catalog[selectedService]
-        ? Object.keys(catalog[selectedService].providers)
-        : [];
+    function showMessage(text, success = false) {
+      message.style.display = "block";
+      message.style.background = success ? "#204b37" : "#542d35";
+      message.textContent = text;
+    }
 
-      fillSelect(provider, providers, "Select provider");
-      fillSelect(product, [], "Select product");
+    function setupForm() {
+      const settings = config[requestedService];
+      if (!settings) {
+        $("missingService").hidden = false;
+        return;
+      }
 
-      meterArea.hidden = selectedService !== "electricity";
+      serviceInput.value = requestedService;
+      $("servicePill").textContent = settings.title;
+      $("servicePill").hidden = false;
+      form.hidden = false;
 
-      if (selectedService === "boosting") {
-        referenceLabel.textContent = "Social Media Profile URL / Username";
-        reference.placeholder = "Enter your profile URL or username";
-      } else if (selectedService === "cable") {
-        referenceLabel.textContent = "Decoder / Smartcard Number";
-        reference.placeholder = "Enter decoder number";
-      } else if (selectedService === "electricity") {
-        referenceLabel.textContent = "Meter Number";
-        reference.placeholder = "Enter meter number";
-      } else {
-        referenceLabel.textContent = "Phone Number";
-        reference.placeholder = "Enter phone number";
+      $("providerLabel").textContent = settings.providerLabel;
+      $("productLabel").textContent = settings.productLabel;
+      $("referenceLabel").textContent = settings.referenceLabel;
+      reference.placeholder = settings.placeholder;
+      $("amount").previousElementSibling.textContent = settings.amountLabel;
+      $("productHint").textContent = settings.productHint || "";
+      $("meterArea").hidden = !settings.meter;
+
+      fillSelect(provider, settings.providers, "Select provider");
+      fillSelect(product, settings.products, "Select option");
+
+      if (requestedService === "electricity") {
+        provider.options[1].text = "Select your disco (choose below)";
+        fillSelect(provider, [
+          "Ikeja Electric", "Eko Electric", "Ibadan Electric",
+          "Kano Electric", "Abuja Electric", "Enugu Electric",
+          "Port Harcourt Electric", "Jos Electric", "Kaduna Electric",
+          "Benin Electric", "Yola Electric"
+        ], "Select electricity disco");
+      }
+
+      if (requestedService === "data" || requestedService === "cable") {
+        const customLabel = requestedService === "data" ? "Data Plan Details" : "Subscription Package";
+        const custom = document.createElement("input");
+        custom.type = "text";
+        custom.id = "customProduct";
+        custom.placeholder = requestedService === "data" ? "Example: 2GB / 30 days" : "Enter package name";
+        custom.required = true;
+        custom.setAttribute("aria-label", customLabel);
+        $("productArea").appendChild(custom);
+        product.hidden = true;
+        product.required = false;
+        $("productLabel").textContent = customLabel;
+        $("productHint").textContent = settings.productHint || "";
+      }
+
+      if (requestedService === "boosting") {
+        const quantity = document.createElement("input");
+        quantity.type = "number";
+        quantity.id = "quantity";
+        quantity.min = "1";
+        quantity.step = "1";
+        quantity.placeholder = "Enter quantity";
+        quantity.required = true;
+        const label = document.createElement("label");
+        label.htmlFor = "quantity";
+        label.textContent = "Quantity";
+        $("productArea").append(label, quantity);
       }
     }
 
-    service.addEventListener("change", updateProviders);
+    setupForm();
 
-    provider.addEventListener("change", () => {
-      const options = catalog[service.value]?.providers[provider.value] || [];
-      fillSelect(product, options, "Select product");
-    });
-
-    const params = new URLSearchParams(window.location.search);
-    const requestedService = params.get("service");
-
-    if (requestedService && catalog[requestedService]) {
-      service.value = requestedService;
-      updateProviders();
-    }
-
-    await import("./app.js");
-
-    const { data: { session }, error } =
-      await supabaseClient.auth.getSession();
-
-    if (error || !session) {
-      message.style.display = "block";
-      message.style.background = "#542d35";
-      message.textContent =
-        "Please sign in before placing an order.";
+    try {
+      await import("./app.js");
+    } catch (err) {
+      console.error("Could not load app.js:", err);
+      showMessage("The order script could not load. Please check that app.js exists in the same folder.");
       submitButton.disabled = true;
     }
 
-    // Runs before the app.js document-level submit handler.
-    form.addEventListener("submit", () => {
-      const selectedService = service.value;
-      const selectedProvider = provider.value;
-      const selectedProduct = product.value;
-      const enteredReference = reference.value.trim();
+    const { data: { session }, error } = await supabaseClient.auth.getSession();
+    if (error || !session) {
+      showMessage("Please sign in before placing an order.");
+      submitButton.disabled = true;
+    }
 
-      productCode.value =
-        selectedService + "_" +
-        selectedProvider.toLowerCase().replace(/[^a-z0-9]+/g, "_") +
-        "_" +
-        selectedProduct.toLowerCase().replace(/[^a-z0-9]+/g, "_");
+    form.addEventListener("submit", () => {
+      const settings = config[requestedService];
+      if (!settings) return;
+
+      const chosenProvider = provider.value;
+      let chosenProduct = product.value;
+      const customProduct = $("customProduct");
+      if (customProduct) chosenProduct = customProduct.value.trim();
+
+      const enteredReference = reference.value.trim();
+      const quantity = $("quantity")?.value || "";
+
+      productCode.value = [
+        requestedService,
+        chosenProvider.toLowerCase().replace(/[^a-z0-9]+/g, "_"),
+        chosenProduct.toLowerCase().replace(/[^a-z0-9]+/g, "_"),
+        quantity ? "qty_" + quantity : ""
+      ].filter(Boolean).join("_");
 
       customerReference.value = enteredReference;
-
-      if (selectedService === "electricity") {
-        customerReference.value =
-          enteredReference + " (" + meterType.value + ")";
+      if (requestedService === "electricity") {
+        customerReference.value = enteredReference + " (" + $("meterType").value + ")";
       }
     });
 
     window.addEventListener("voltiva-order-result", event => {
-      message.style.display = "block";
-      message.style.background =
-        event.detail.success ? "#204b37" : "#542d35";
-      message.textContent = event.detail.message;
+      showMessage(event.detail?.message || "Your order request has been received.", !!event.detail?.success);
     });
   </script>
 </body>
